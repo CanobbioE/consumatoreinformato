@@ -1,0 +1,27 @@
+export const ISCR_POST_FAIL = 'iscr_post_fail';
+export const ISCR_POST_LOADING = 'iscr_post_loading';
+export const ISCR_POST_SUCCESS = 'iscr_post_success';
+
+export const ISCR_FIELDS = 'iscr_fields';
+
+export const LOGIN_POST_FAIL = 'login_post_fail';
+export const LOGIN_POST_LOADING = 'login_post_loading';
+export const LOGIN_POST_SUCCESS = 'login_post_success';
+
+export const LOGIN_GET_FAIL = 'login_get_fail';
+export const LOGIN_GET_LOADING = 'login_get_loading';
+export const LOGIN_GET_SUCCESS = 'login_get_success';
+
+export const LOGOUT_SUCCESS = 'logout_success';
+
+export const ARTICLE_GET_LOADING = 'article_get_loading';
+export const ARTICLE_GET_FAIL = 'article_get_fail';
+export const ARTICLE_GET_SUCCESS = 'article_get_success';
+
+export const ARTICLE_PATCH_LOADING = 'article_patch_loading';
+export const ARTICLE_PATCH_FAIL = 'article_patch_fail';
+export const ARTICLE_PATCH_SUCCESS = 'article_patch_success';
+
+export const ARTICLE_POST_LOADING = 'article_post_loading';
+export const ARTICLE_POST_FAIL = 'article_post_fail';
+export const ARTICLE_POST_SUCCESS = 'article_post_success';
