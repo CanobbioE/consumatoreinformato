@@ -10,7 +10,7 @@ export default ChildComponent => {
 		}, []);
 
 		const shouldNavigateAway = () => {
-			if (!props.user || isAdmin(props.user)) {
+			if (!isAdmin(props.user)) {
 				props.history.push(Globals.routes.home);
 			}
 		};

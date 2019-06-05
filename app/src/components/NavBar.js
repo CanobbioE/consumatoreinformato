@@ -39,7 +39,6 @@ function NavBar(props) {
 				Esci
 			</Button>
 		);
-	console.log(props);
 
 	const bell =
 		props.loginForm.token !== '' && !isAdmin(props.loginForm.user) ? (

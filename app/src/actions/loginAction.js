@@ -62,10 +62,6 @@ export const fetchCurrentUserData = () => async dispatch => {
 	}
 };
 
-export const fetchAllUsersData = () => async dispatch => {
-	console.log('IMPLEMENT ME');
-};
-
 export const logout = () => {
 	localStorage.removeItem('token');
 	localStorage.removeItem('user');

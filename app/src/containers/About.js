@@ -1,6 +1,6 @@
 import React from 'react';
 import {Grid, Typography, Paper} from '@material-ui/core/';
-import {lorem} from '../utils/mock';
+import {lorem} from '../utils/lorem';
 import {withStyles} from '@material-ui/core/styles';
 import bgHome from '../assets/images/bg/bg-home.jpg';
 

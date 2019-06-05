@@ -40,7 +40,7 @@ export const completaIscrizione = (tkn, fields) => async dispatch => {
 		console.log(e);
 		dispatch({
 			type: ISCR_POST_FAIL,
-			payload: e,
+			payload: e.response.data,
 		});
 	}
 };

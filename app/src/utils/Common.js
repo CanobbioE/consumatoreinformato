@@ -6,11 +6,17 @@ Date.daysBetween = (d1, d2) => {
 
 /*
  * User structure:
- * {
- * 	email: ""
- * 	payments: []
- * 	roles: []
- * 	uploads: []
+ * birthday: ""
+ * birthplace: ""
+ * codiceFiscale: ""
+ * email: ""
+ * homeAddress: ""
+ * name: ""
+ * payments: [{...}]
+ * roles: []
+ * surname: ""
+ * telephoneNumber: ""
+ * uploads: [{...}]
  */
 export const getUser = () => {
 	const su = localStorage.getItem('user');
@@ -25,7 +31,6 @@ export const isAdmin = user => {
 };
 
 export const lastPayment = user => {
-	console.log(user);
 	if (!user || !user.payments || !user.payments.length)
 		return new Date('1994-03-23');
 	return user.payments[user.payments.length - 1];
