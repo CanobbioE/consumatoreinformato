@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {Grid} from '@material-ui/core/';
 import {withStyles} from '@material-ui/core/styles';
-import {fetchUserData} from '../actions';
+import {fetchCurrentUserData} from '../actions';
 import RequireAuth from './RequireAuth';
 import UploadFile from '../components/UploadFile';
 import PaymentList from '../components/PaymentList';
@@ -15,15 +15,11 @@ const styles = theme => ({
 	},
 });
 
+// Pay!
 function Personal(props) {
 	const {classes} = props;
 	useEffect(() => {
-		try {
-			const email = JSON.parse(localStorage.getItem('user')).email;
-			props.fetchUserData(email);
-		} catch (e) {
-			console.log(e);
-		}
+		props.fetchCurrentUserData();
 	}, []);
 	return (
 		<Grid item container spacing={0} justify="center">
@@ -51,7 +47,7 @@ const composedComponent = compose(
 	connect(
 		mapStateToProps,
 		{
-			fetchUserData,
+			fetchCurrentUserData,
 		},
 	),
 );

@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import {IconButton, Badge, Slide, Snackbar} from '@material-ui/core';
+import {IconButton, Badge, Slide, Snackbar, Button} from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import {Link} from 'react-router-dom';
+import Globals from '../config/Globals';
 
 export default function(props) {
 	const [open, setOpen] = useState(null);
@@ -38,6 +40,19 @@ export default function(props) {
 
 	const Transition = props => <Slide {...props} direction="left" />;
 
+	const message = (
+		<span id="message-id">
+			{renderMessage()} -
+			<Button
+				component={Link}
+				to={Globals.routes.payment}
+				color="primary"
+				size="small">
+				Clicca qui per pagare ora
+			</Button>
+		</span>
+	);
+
 	return (
 		<div>
 			<IconButton color="inherit" onClick={handleClick}>
@@ -57,7 +72,7 @@ export default function(props) {
 					'aria-describedby': 'message-id',
 				}}
 				TransitionComponent={Transition}
-				message={<span id="message-id">{renderMessage()}</span>}
+				message={message}
 				action={[
 					<IconButton
 						key="close"

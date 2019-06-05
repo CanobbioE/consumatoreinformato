@@ -1,4 +1,4 @@
-package it.consumatoreinformato.app.dto.user.requests;
+package it.consumatoreinformato.app.dto.users.requests;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

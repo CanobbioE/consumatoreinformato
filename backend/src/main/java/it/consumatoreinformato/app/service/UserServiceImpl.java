@@ -3,12 +3,13 @@ package it.consumatoreinformato.app.service;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import it.consumatoreinformato.app.config.jwt.JwtTokenProvider;
-import it.consumatoreinformato.app.dto.user.requests.LoginDto;
-import it.consumatoreinformato.app.dto.user.requests.RegenerateTokenDto;
-import it.consumatoreinformato.app.dto.user.requests.RegistrationDto;
-import it.consumatoreinformato.app.dto.user.responses.LoginResponseDto;
-import it.consumatoreinformato.app.dto.user.responses.RegenerateTokenResponseDto;
+import it.consumatoreinformato.app.dto.users.requests.LoginDto;
+import it.consumatoreinformato.app.dto.users.requests.RegenerateTokenDto;
+import it.consumatoreinformato.app.dto.users.requests.RegistrationDto;
+import it.consumatoreinformato.app.dto.users.responses.LoginResponseDto;
+import it.consumatoreinformato.app.dto.users.responses.RegenerateTokenResponseDto;
 import it.consumatoreinformato.app.dto.payments.responses.PaymentStatusDto;
+import it.consumatoreinformato.app.dto.users.responses.UserDto;
 import it.consumatoreinformato.app.exception.*;
 import it.consumatoreinformato.app.model.entities.Payment;
 import it.consumatoreinformato.app.model.entities.User;
@@ -24,7 +25,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -56,9 +59,9 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * @param email user's email
-     * @return the user to which correspond the given email
-     * @throws UserNotFoundException if the user does not exist
+     * @param email users's email
+     * @return the users to which correspond the given email
+     * @throws UserNotFoundException if the users does not exist
      */
     public User getByEmail(String email) throws UserNotFoundException {
         Optional<User> oUser = userRepository.findByEmail(email);
@@ -68,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Registers a new user after verifying that the payment was valid
+     * Registers a new users after verifying that the payment was valid
      *
      * @param registrationDto
      * @return anything needed to the front end
@@ -101,10 +104,10 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Tries to log the user in by verifying its credentials
+     * Tries to log the users in by verifying its credentials
      *
      * @param loginDto a DTO containing an email and a password
-     * @return a DTO containing all the needed tokens to authenticate the user
+     * @return a DTO containing all the needed tokens to authenticate the users
      * @throws UserNotFoundException  if the username (email) is not found
      * @throws WrongPasswordException if the password provided doesn't match the hash stored
      */
@@ -181,5 +184,13 @@ public class UserServiceImpl implements UserService {
      */
     private String getRegenerationToken(User user) {
         return jwtTokenProvider.createRegenerationToken(user.getEmail(), new ArrayList<>(user.getRoles()));
+    }
+
+
+    /**
+     * @return A list of all the users registered in the application
+     */
+    public List<UserDto> getAll() {
+        return userRepository.findAll().stream().map(UserDto::fromModel).collect(Collectors.toList());
     }
 }

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {Grid, Paper} from '@material-ui/core/';
 import {withStyles} from '@material-ui/core/styles';
-import {fetchUserData} from '../actions';
+import {fetchAllUsersData} from '../actions';
 import RequireAdmin from './RequireAdmin';
 import DocsTable from '../components/DocsTable';
 import {labels, rows} from '../utils/mock';
@@ -33,7 +33,7 @@ const composedComponent = compose(
 	connect(
 		mapStateToProps,
 		{
-			fetchUserData,
+			fetchAllUsersData,
 		},
 	),
 );

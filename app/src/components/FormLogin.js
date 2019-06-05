@@ -75,7 +75,7 @@ function FormLogin(props) {
 							fullWidth
 							label={'E-mail'}
 							value={mail}
-							type="mail"
+							type="email"
 							onChange={e => handleChange(e, setMail)}
 							margin="dense"
 							variant="outlined"

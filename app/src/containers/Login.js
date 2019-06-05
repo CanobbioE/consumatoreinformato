@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import FormLogin from '../components/FormLogin';
 import {Grid} from '@material-ui/core/';
-import {login, fetchUserData} from '../actions';
+import {login, fetchCurrentUserData} from '../actions';
 import Globals from '../config/Globals';
 import {withStyles} from '@material-ui/core/styles';
 import bgLogin from '../assets/images/bg/bg-login.jpeg';
@@ -28,10 +28,10 @@ const styles = theme => ({
 
 function Login(props) {
 	const handleSubmit = async (mail, pwd) => {
-		await props.login(mail, pwd);
-		if (props.loginForm.error) return;
-		await props.fetchUserData(mail);
-		if (props.loginForm.error) return;
+		let err = await props.login(mail, pwd);
+		if (err) return;
+		err = await props.fetchCurrentUserData();
+		if (err) return;
 		props.history.push(Globals.routes.home);
 	};
 	const {classes} = props;
@@ -57,7 +57,7 @@ const composedComponent = connect(
 	mapStateToProps,
 	{
 		login,
-		fetchUserData,
+		fetchCurrentUserData,
 	},
 );
 

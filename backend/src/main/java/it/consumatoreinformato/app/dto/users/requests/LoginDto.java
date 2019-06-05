@@ -1,9 +1,9 @@
-package it.consumatoreinformato.app.dto.user.responses;
+package it.consumatoreinformato.app.dto.users.requests;
 
-
-import it.consumatoreinformato.app.config.ModelMapperHelper;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+
+import javax.validation.constraints.Email;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
@@ -11,12 +11,10 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class UserDto {
+public class LoginDto {
 
+    @Email
     private String email;
-
-    public static UserDto fromModel(Object model) {
-        return ModelMapperHelper.mapToNew(model, UserDto.class);
-    }
+    private String password;
 
 }

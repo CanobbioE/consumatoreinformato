@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import Globals from '../config/Globals';
 import {logout} from '../actions';
 import Bell from './Bell';
+import {isAdmin, lastPayment} from '../utils/Common';
 
 const styles = {
 	root: {
@@ -38,12 +39,11 @@ function NavBar(props) {
 				Esci
 			</Button>
 		);
+	console.log(props);
 
 	const bell =
-		props.loginForm.token !== '' &&
-		props.loginForm.user &&
-		props.loginForm.user.role !== 'admin' ? (
-			<Bell lastPayment={props.loginForm.user.lastPayment} />
+		props.loginForm.token !== '' && !isAdmin(props.loginForm.user) ? (
+			<Bell lastPayment={lastPayment(props.loginForm.user)} />
 		) : null;
 
 	return (
@@ -75,7 +75,7 @@ function NavBar(props) {
 
 						{props.loginForm.token !== '' &&
 							props.loginForm.user &&
-							props.loginForm.user.role !== 'admin' && (
+							!isAdmin(props.loginForm.user) && (
 								<Button
 									component={Link}
 									to={Globals.routes.personal}
@@ -83,7 +83,7 @@ function NavBar(props) {
 									Area Pesonale
 								</Button>
 							)}
-						{props.loginForm.user && props.loginForm.user.role === 'admin' && (
+						{isAdmin(props.loginForm.user) && (
 							<Button
 								component={Link}
 								to={Globals.routes.admin}
