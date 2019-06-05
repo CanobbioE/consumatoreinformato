@@ -12,6 +12,15 @@ export default class Globals {
 		refreshJWT: '/users/regenerate-token',
 		register: '/users/register',
 		payment: '/payments/pay',
+		userData: {
+			current: '/users/current',
+			all: '/users/all',
+		},
+		articles: {
+			getAll: '/articles/all',
+			edit: '/articles/edit',
+			post: '/articles/create',
+		},
 	};
 
 	// All the routes in this app

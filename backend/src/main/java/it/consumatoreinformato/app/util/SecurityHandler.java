@@ -7,6 +7,8 @@ import it.consumatoreinformato.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -34,7 +36,9 @@ public class SecurityHandler {
     }
 
     private UserDetails getPrincipal() throws NotAuthenticatedException {
-        if (SecurityContextHolder.getContext() == null || SecurityContextHolder.getContext().getAuthentication() == null)
+        SecurityContext x = SecurityContextHolder.getContext();
+        Authentication y = SecurityContextHolder.getContext().getAuthentication();
+        if (x == null || y == null)
             throw new NotAuthenticatedException();
 
         return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

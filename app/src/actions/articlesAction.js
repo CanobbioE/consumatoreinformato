@@ -1,4 +1,3 @@
-import {articles, sleep} from '../utils/mock';
 import {
 	ARTICLE_GET_LOADING,
 	ARTICLE_GET_FAIL,
@@ -10,6 +9,8 @@ import {
 	ARTICLE_PATCH_FAIL,
 	ARTICLE_PATCH_SUCCESS,
 } from '../utils/Types';
+import Globals from '../config/Globals';
+import axios from 'axios';
 
 export const fetchArticles = () => async dispatch => {
 	dispatch({
@@ -17,17 +18,18 @@ export const fetchArticles = () => async dispatch => {
 	});
 	try {
 		// todo axios get
-		const response = articles;
-		await sleep(900);
+		const response = await axios.get(
+			Globals.baseURL + Globals.API.articles.getAll,
+		);
 		dispatch({
 			type: ARTICLE_GET_SUCCESS,
-			payload: response,
+			payload: response.data,
 		});
 	} catch (e) {
 		console.log(e);
 		dispatch({
 			type: ARTICLE_GET_FAIL,
-			payload: e,
+			payload: e.response.data,
 		});
 	}
 };
@@ -37,8 +39,15 @@ export const postArticle = (title, image, content) => async dispatch => {
 		type: ARTICLE_POST_LOADING,
 	});
 	try {
-		// todo axios post
-		await sleep(900);
+		await axios.post(
+			Globals.baseURL + Globals.API.articles.post,
+			{title, image, content},
+			{
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
+			},
+		);
 		dispatch({
 			type: ARTICLE_POST_SUCCESS,
 		});
@@ -46,7 +55,7 @@ export const postArticle = (title, image, content) => async dispatch => {
 		console.log(e);
 		dispatch({
 			type: ARTICLE_POST_FAIL,
-			payload: e,
+			payload: e.response.data,
 		});
 	}
 };
@@ -56,9 +65,15 @@ export const patchArticle = (title, image, content, id) => async dispatch => {
 		type: ARTICLE_PATCH_LOADING,
 	});
 	try {
-		// todo axios post
-		console.log('posting', title, image, content, id);
-		await sleep(900);
+		await axios.patch(
+			Globals.baseURL + Globals.API.articles.edit,
+			{id, title, content, image},
+			{
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
+			},
+		);
 		dispatch({
 			type: ARTICLE_PATCH_SUCCESS,
 		});
@@ -66,7 +81,7 @@ export const patchArticle = (title, image, content, id) => async dispatch => {
 		console.log(e);
 		dispatch({
 			type: ARTICLE_PATCH_FAIL,
-			payload: e,
+			payload: e.response.data,
 		});
 	}
 };

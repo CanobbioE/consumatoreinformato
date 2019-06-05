@@ -2,7 +2,7 @@ package it.consumatoreinformato.app.dto.payments.responses;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import it.consumatoreinformato.app.config.ModelMapperHelper;
-import it.consumatoreinformato.app.dto.user.responses.UserDto;
+import it.consumatoreinformato.app.dto.users.responses.UserDto;
 import lombok.*;
 
 import java.math.BigDecimal;

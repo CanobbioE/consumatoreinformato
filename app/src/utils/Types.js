@@ -25,3 +25,7 @@ export const ARTICLE_PATCH_SUCCESS = 'article_patch_success';
 export const ARTICLE_POST_LOADING = 'article_post_loading';
 export const ARTICLE_POST_FAIL = 'article_post_fail';
 export const ARTICLE_POST_SUCCESS = 'article_post_success';
+
+export const ADMIN_GET_USERS_SUCCESS = 'admin_get_users_success';
+export const ADMIN_GET_USERS_FAIL = 'admin_get_users_fail';
+export const ADMIN_GET_USERS_LOADING = 'admin_get_users_loading';

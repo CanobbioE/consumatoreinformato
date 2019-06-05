@@ -8,6 +8,7 @@ import {
 	LOGOUT_SUCCESS,
 } from '../utils/Types';
 import {getUser} from '../utils/Common';
+import parseError from '../utils/Errors';
 
 const INITIAL_STATE = {
 	loading: false,
@@ -19,13 +20,21 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case LOGIN_POST_FAIL:
-			return {...state, error: action.payload, loading: false};
+			return {
+				...state,
+				error: parseError(action.payload),
+				loading: false,
+			};
 		case LOGIN_POST_SUCCESS:
 			return {...state, error: '', loading: false, token: action.payload};
 		case LOGIN_POST_LOADING:
 			return {...state, loading: true};
 		case LOGIN_GET_FAIL:
-			return {...state, loading: false, error: action.payload};
+			return {
+				...state,
+				error: parseError(action.payload),
+				loading: false,
+			};
 		case LOGIN_GET_SUCCESS:
 			return {...state, loading: false, user: action.payload};
 		case LOGIN_GET_LOADING:

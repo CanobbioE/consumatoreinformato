@@ -1,9 +1,11 @@
-package it.consumatoreinformato.app.dto.user.requests;
+package it.consumatoreinformato.app.dto.payments.responses;
+
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import javax.validation.constraints.Email;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
@@ -11,10 +13,7 @@ import javax.validation.constraints.Email;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class LoginDto {
-
-    @Email
-    private String email;
-    private String password;
-
+public class UserInfoPaymentDto {
+    private BigDecimal amount;
+    private LocalDate date;
 }

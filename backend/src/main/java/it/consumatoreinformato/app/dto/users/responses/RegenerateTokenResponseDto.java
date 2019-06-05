@@ -1,4 +1,4 @@
-package it.consumatoreinformato.app.dto.user.requests;
+package it.consumatoreinformato.app.dto.users.responses;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class RegenerateTokenDto {
+public class RegenerateTokenResponseDto {
+    private String token;
     private String regenerateToken;
 }

@@ -13,6 +13,7 @@ import {completaIscrizione} from '../actions';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import Globals from '../config/Globals';
+import LoadingIcon from '../components/LoadingIcon';
 
 const styles = theme => ({
 	listItem: {
@@ -49,24 +50,27 @@ function Payment(props) {
 						<Grid item xs={10}>
 							<Typography variant="h5">Pagamento</Typography>
 						</Grid>
-						<Grid item xs={9}>
-							<Typography variant="h6" gutterBottom>
-								Riepilogo:
-							</Typography>
-							<List disablePadding>
-								<ListItem className={classes.listItem}>
-									<ListItemText primary={name} secondary={desc} />
-									<Typography variant="body2">{amount / 100} €</Typography>
-								</ListItem>
-								<Divider />
-								<ListItem className={classes.listItem}>
-									<ListItemText primary="Totale" />
-									<Typography variant="subtitle1" className={classes.total}>
-										{amount / 100} €
-									</Typography>
-								</ListItem>
-							</List>
-						</Grid>
+						<LoadingIcon show={props.iscrForm.loading} />
+						{!props.iscrForm.loading && (
+							<Grid item xs={9}>
+								<Typography variant="h6" gutterBottom>
+									Riepilogo:
+								</Typography>
+								<List disablePadding>
+									<ListItem className={classes.listItem}>
+										<ListItemText primary={name} secondary={desc} />
+										<Typography variant="body2">{amount / 100} €</Typography>
+									</ListItem>
+									<Divider />
+									<ListItem className={classes.listItem}>
+										<ListItemText primary="Totale" />
+										<Typography variant="subtitle1" className={classes.total}>
+											{amount / 100} €
+										</Typography>
+									</ListItem>
+								</List>
+							</Grid>
+						)}
 						<Grid item container xs={9} justify="flex-end">
 							<Checkout
 								amount={amount}
