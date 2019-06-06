@@ -33,7 +33,7 @@ function createRows(users) {
 				id: user.id,
 				name: user.name,
 				surname: user.surname,
-				lastPay: user.payments[user.payments.length - 1],
+				lastPayDate: user.payments[user.payments.length - 1].date,
 			},
 	);
 }

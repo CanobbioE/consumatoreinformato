@@ -53,6 +53,14 @@ public class PaymentServiceImpl implements PaymentService {
         return Charge.create(chargeParams);
     }
 
+    /**
+     * Creates a Charge for a one time transaction made by a registered user
+     * @param payer The user paying
+     * @param token Transaction's identifier
+     * @return The payment status
+     * @throws PaymentFailedException
+     * @throws StripeException
+     */
     public PaymentStatusDto pay(User payer, String token) throws PaymentFailedException, StripeException {
         Charge charge = chargeCreditCard(payer.getEmail(), token);
         if (!charge.getPaid()) throw new PaymentFailedException((charge.getStatus()));

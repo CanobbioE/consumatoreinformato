@@ -60,7 +60,7 @@ export default function gdpr() {
 			</Typography>
 			<br />
 			<Typography variant="body1">
-				<b>3. Conferimentodei dati </b>
+				<b>3. Conferimento dei dati </b>
 			</Typography>
 			<Typography variant="body1">
 				Il conferimento dei dati riservati (nome, data di nascita, indirizzo,

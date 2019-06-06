@@ -33,5 +33,7 @@ export default class Globals {
 		payment: '/pagamento',
 		personal: '/area-personale',
 		admin: '/amministrazione/',
+		collabs: '/collaboratori',
+		gdpr: '/privacy',
 	};
 }

@@ -13,21 +13,8 @@ import {
 	Typography,
 } from '@material-ui/core';
 import red from '@material-ui/core/colors/red';
-import CommentIcon from '@material-ui/icons/ModeComment';
 import {ExpandMore} from '@material-ui/icons';
 import {Edit} from '@material-ui/icons';
-import i1 from '../assets/images/articles/1.jpeg';
-import i2 from '../assets/images/articles/2.jpeg';
-import i3 from '../assets/images/articles/3.jpeg';
-import i4 from '../assets/images/articles/4.jpeg';
-import i5 from '../assets/images/articles/5.jpeg';
-import i6 from '../assets/images/articles/6.jpeg';
-import i7 from '../assets/images/articles/7.jpeg';
-import i8 from '../assets/images/articles/8.jpeg';
-import i9 from '../assets/images/articles/9.jpeg';
-import i10 from '../assets/images/articles/10.jpeg';
-import i11 from '../assets/images/articles/11.jpeg';
-import i12 from '../assets/images/articles/12.jpeg';
 
 const styles = theme => ({
 	card: {
@@ -55,8 +42,6 @@ const styles = theme => ({
 	},
 });
 
-const images = [i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12];
-
 const Article = props => {
 	const [expanded, setExpanded] = useState(false);
 
@@ -82,7 +67,7 @@ const Article = props => {
 			<CardHeader action={actions} title={props.title} subheader={props.date} />
 			<CardMedia
 				className={classes.media}
-				image={images[props.img]}
+				image={props.img}
 				title={props.title}
 			/>
 			<CardContent>
@@ -91,11 +76,6 @@ const Article = props => {
 				</Typography>
 			</CardContent>
 			<CardActions className={classes.actions} disableActionSpacing>
-				{Boolean(props.canComment) && (
-					<IconButton aria-label="Commenta">
-						<CommentIcon />
-					</IconButton>
-				)}
 				<IconButton
 					className={classnames(classes.expand, {
 						[classes.expandOpen]: expanded,

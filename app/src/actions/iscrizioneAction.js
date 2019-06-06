@@ -36,6 +36,7 @@ export const completaIscrizione = (tkn, fields) => async dispatch => {
 		dispatch({
 			type: ISCR_POST_SUCCESS,
 		});
+		return null;
 	} catch (e) {
 		console.log(e);
 		dispatch({
