@@ -17,7 +17,6 @@ export const fetchArticles = () => async dispatch => {
 		type: ARTICLE_GET_LOADING,
 	});
 	try {
-		// todo axios get
 		const response = await axios.get(
 			Globals.baseURL + Globals.API.articles.getAll,
 		);
@@ -65,7 +64,7 @@ export const patchArticle = (title, image, content, id) => async dispatch => {
 		type: ARTICLE_PATCH_LOADING,
 	});
 	try {
-		await axios.patch(
+		await axios.post(
 			Globals.baseURL + Globals.API.articles.edit,
 			{id, title, content, image},
 			{

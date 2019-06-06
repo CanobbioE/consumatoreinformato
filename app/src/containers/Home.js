@@ -47,7 +47,8 @@ function Home(props) {
 		<Grid key={a.id} item xs={12}>
 			{a.id === toEdit ? (
 				<FormArticle
-					img={a.id % 12}
+					id={a.id}
+					img={a.image}
 					title={a.title}
 					content={a.content}
 					onSubmit={handleEditSubmit}
@@ -56,7 +57,8 @@ function Home(props) {
 				/>
 			) : (
 				<Article
-					img={a.id % 12}
+					id={a.id}
+					img={a.image}
 					title={a.title}
 					content={a.content}
 					date={a.date}

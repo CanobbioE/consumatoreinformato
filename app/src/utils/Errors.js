@@ -1,6 +1,8 @@
 export default error => {
 	const code = error.code;
-	const params = Object.values(error.params);
+	if (!error) return 'Errore inaspettato';
+	const params = error.params ? Object.values(error.params) : [];
+
 	return (
 		{
 			EMAIL_ALREADY_REGISTERED: `L'e-mail ${

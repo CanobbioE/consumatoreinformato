@@ -52,7 +52,7 @@ const FormArticle = props => {
 				/>
 				<CardContent>
 					<TextField
-						label="Immagine"
+						label="URL Immagine"
 						value={image}
 						fullWidth
 						onChange={handleChange(setImage)}
@@ -63,7 +63,7 @@ const FormArticle = props => {
 						label="Testo"
 						value={content}
 						multiline={true}
-						rows={2}
+						rows={10}
 						fullWidth
 						rowsMax={25}
 						onChange={handleChange(setContent)}

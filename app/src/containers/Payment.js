@@ -9,7 +9,7 @@ import {
 	ListItemText,
 	Divider,
 } from '@material-ui/core/';
-import {completaIscrizione} from '../actions';
+import {completaIscrizione, pay} from '../actions';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import Globals from '../config/Globals';
@@ -34,14 +34,18 @@ function Payment(props) {
 	const desc = 'Iscrizione per 12 mesi al sito';
 	const handleToken = async tkn => {
 		if (props.iscrForm.fields) {
-			await props.completaIscrizione(tkn, props.iscrForm.fields);
-			props.history.push(Globals.routes.login);
+			const err = await props.completaIscrizione(tkn, props.iscrForm.fields);
+			console.log('1', err);
+			if (err === null) props.history.push(Globals.routes.login);
 			return;
 		}
-		await props.pay(tkn, props.loginForm.user.email);
+		const err = await props.pay(tkn, props.loginForm.user.email);
+		console.log('2', err);
 		// TODO: redirect to payment success page
-		props.history.push(Globals.routes.home);
+		if (err === null) props.history.push(Globals.routes.home);
 	};
+
+	const error = props.payment.error || props.iscrForm.error;
 	return (
 		<Grid item container justify="center" spacing={0}>
 			<Grid item xs={6} style={{marginTop: '24px'}}>
@@ -51,7 +55,12 @@ function Payment(props) {
 							<Typography variant="h5">Pagamento</Typography>
 						</Grid>
 						<LoadingIcon show={props.iscrForm.loading} />
-						{!props.iscrForm.loading && (
+						{error && (
+							<Typography color="error" variant="body1">
+								{error}
+							</Typography>
+						)}
+						{!props.iscrForm.loading && !error && (
 							<Grid item xs={9}>
 								<Typography variant="h6" gutterBottom>
 									Riepilogo:
@@ -86,12 +95,13 @@ function Payment(props) {
 	);
 }
 
-function mapStateToProps({iscrForm}) {
-	return {iscrForm};
+function mapStateToProps({iscrForm, payment}) {
+	return {iscrForm, payment};
 }
 const composedComponent = connect(
 	mapStateToProps,
 	{
+		pay,
 		completaIscrizione,
 	},
 );

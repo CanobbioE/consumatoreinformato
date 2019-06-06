@@ -29,3 +29,7 @@ export const ARTICLE_POST_SUCCESS = 'article_post_success';
 export const ADMIN_GET_USERS_SUCCESS = 'admin_get_users_success';
 export const ADMIN_GET_USERS_FAIL = 'admin_get_users_fail';
 export const ADMIN_GET_USERS_LOADING = 'admin_get_users_loading';
+
+export const PAY_POST_LOADING = 'pay_post_loading';
+export const PAY_POST_FAIL = 'pay_post_fail';
+export const PAY_POST_SUCCESS = 'pay_post_success';
