@@ -12,5 +12,6 @@ public enum InternalErrorCode {
     PAYMENT_FAILED,
     INVALID_FILENAME,
     UPLOAD_FAILED,
-    FILE_NOT_FOUND
+    FILE_NOT_FOUND,
+    USER_NOT_OWNER
 }

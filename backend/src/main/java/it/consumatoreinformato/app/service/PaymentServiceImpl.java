@@ -47,7 +47,7 @@ public class PaymentServiceImpl implements PaymentService {
         chargeParams.put("amount", amount);
         chargeParams.put("currency", "eur");
         chargeParams.put("source", token);
-        chargeParams.put("description", "Iscrizione al sito ConsumatoreInformato.it");
+        chargeParams.put("description", "Iscrizione annuale al sito ConsumatoreInformato.it");
         chargeParams.put("receipt_email", email);
 
         return Charge.create(chargeParams);

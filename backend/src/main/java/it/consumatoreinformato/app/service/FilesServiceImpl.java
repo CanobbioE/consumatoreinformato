@@ -3,11 +3,14 @@ package it.consumatoreinformato.app.service;
 
 import it.consumatoreinformato.app.dto.uploads.requests.FileUploadDto;
 import it.consumatoreinformato.app.dto.uploads.responses.UploadFileResponseDto;
+import it.consumatoreinformato.app.dto.uploads.responses.UserInfoUploadDto;
 import it.consumatoreinformato.app.exception.FileNotFoundException;
 import it.consumatoreinformato.app.exception.FileStorageException;
 import it.consumatoreinformato.app.exception.InvalidFileNameException;
+import it.consumatoreinformato.app.model.entities.Upload;
+import it.consumatoreinformato.app.model.entities.User;
+import it.consumatoreinformato.app.repository.FilesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
@@ -20,16 +23,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
-public class UploadServiceImpl implements UploadService {
+public class FilesServiceImpl implements FilesService {
 
     private Path fileStorageLocation;
+    private final FilesRepository filesRepository;
 
     @Autowired
     // TODO: this is hardcoded, somehow it doesn't load from properties
-    public UploadServiceImpl() {
+    public FilesServiceImpl(FilesRepository filesRepository) {
+        this.filesRepository = filesRepository;
         this.fileStorageLocation = Paths.get("/uploads").toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
@@ -44,7 +52,8 @@ public class UploadServiceImpl implements UploadService {
      * @throws FileStorageException
      * @throws InvalidFileNameException
      */
-    public UploadFileResponseDto uploadFile(FileUploadDto fileUploadDto) throws FileStorageException, InvalidFileNameException {
+    public UploadFileResponseDto uploadFile(FileUploadDto fileUploadDto, User uploader)
+            throws FileStorageException, InvalidFileNameException {
         // Normalize file name
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(fileUploadDto.getFile().getOriginalFilename()));
 
@@ -63,6 +72,13 @@ public class UploadServiceImpl implements UploadService {
                     .path("/downloadFile/")
                     .path(fileName)
                     .toUriString();
+
+            filesRepository.save(Upload.builder()
+                    .date(LocalDate.now())
+                    .filePath(fileDownloadUri)
+                    .fileName(fileName)
+                    .uploader(uploader)
+                    .build());
 
             return UploadFileResponseDto.builder()
                     .fileName(fileName)
@@ -92,5 +108,26 @@ public class UploadServiceImpl implements UploadService {
         } catch (MalformedURLException ex) {
             throw new FileNotFoundException(fileName, ex);
         }
+    }
+
+    /**
+     * @return a list of all the uploaded files and where to download them, and who uploaded them
+     */
+    public List<UserInfoUploadDto> allUploads() {
+        return filesRepository.findAll().stream().map(UserInfoUploadDto::fromModel).collect(Collectors.toList());
+    }
+
+    /**
+     * Retrieve all the id of users that uploaded a file with the specified fileName
+     *
+     * @param fileName the name of the uploaded file
+     * @return a list of IDs
+     */
+    public List<Long> getOwner(String fileName) {
+        return filesRepository.findByFileName(fileName).stream()
+                .map(Upload::getUploader)
+                .map(User::getId)
+                .collect(Collectors.toList());
+
     }
 }

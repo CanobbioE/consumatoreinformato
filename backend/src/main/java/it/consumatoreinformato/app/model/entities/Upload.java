@@ -32,4 +32,7 @@ public class Upload {
     @Column(name = "file")
     private String filePath;
 
+    @Column(name = "name")
+    private String fileName;
+
 }
