@@ -33,6 +33,7 @@ function PaymentList(props) {
 			{i !== props.items.length - 1 && <Divider />}
 		</Grid>
 	));
+	const scrollable = items.length >= 5 ? 'scrollbar' : '';
 	return (
 		<Paper>
 			<Grid
@@ -48,7 +49,7 @@ function PaymentList(props) {
 					</Typography>
 				</Grid>
 				<Grid item xs={10}>
-					<List className="scrollbar">{items}</List>
+					<List className={scrollable}>{items}</List>
 				</Grid>
 			</Grid>
 		</Paper>

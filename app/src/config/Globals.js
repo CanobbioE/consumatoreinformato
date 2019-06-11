@@ -21,6 +21,11 @@ export default class Globals {
 			edit: '/articles/edit',
 			post: '/articles/create',
 		},
+		files: {
+			upload: '/files/upload',
+			all: '/files/all',
+			download: '/files/download',
+		},
 	};
 
 	// All the routes in this app

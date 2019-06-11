@@ -3,43 +3,69 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {Grid} from '@material-ui/core/';
 import {withStyles} from '@material-ui/core/styles';
-import {fetchCurrentUserData} from '../actions';
+import {fetchCurrentUserData, uploadFile} from '../actions';
 import RequireAuth from './RequireAuth';
 import UploadFile from '../components/UploadFile';
 import PaymentList from '../components/PaymentList';
+import bgHome from '../assets/images/bg/bg-home.jpg';
 // import Globals from '../config/Globals';
 
 const styles = theme => ({
+	bg: {
+		backgroundImage: `url(${bgHome})`,
+		filter: 'blur(8px)',
+		width: '100%',
+		' -webkit-filter': 'blur(8px)',
+		backgroundPosition: 'center',
+		backgroundRepeat: 'no-repeat',
+		backgroundSize: 'cover',
+		height: '0',
+		paddingTop: '145vh',
+	},
 	clearBg: {
 		marginTop: '62px',
+		position: 'absolute',
+		width: '100%',
 	},
 });
 
-// Pay!
 function Personal(props) {
 	const {classes} = props;
 	useEffect(() => {
 		props.fetchCurrentUserData();
 	}, []);
+
+	const handleSubmit = file => {
+		props.uploadFile(file);
+	};
+
+	// TODO: file caricati + download
 	return (
 		<Grid item container spacing={0} justify="center">
-			<Grid item container xs={10} spacing={16} justify="center">
-				<Grid item xs={7} className={classes.clearBg}>
-					<UploadFile />
-				</Grid>
+			<div className={classes.bg} />
+			<Grid item xs={10} className={classes.clearBg}>
+				<Grid item container xs={12} spacing={16} justify="center">
+					<Grid item xs={7}>
+						<UploadFile
+							success={props.files.success}
+							loading={props.files.lodaing}
+							onSubmit={handleSubmit}
+						/>
+					</Grid>
 
-				<Grid item xs={5} className={classes.clearBg}>
-					{props.loginForm.user && (
-						<PaymentList items={props.loginForm.user.payments} />
-					)}
+					<Grid item xs={5}>
+						{props.loginForm.user && (
+							<PaymentList items={props.loginForm.user.payments} />
+						)}
+					</Grid>
 				</Grid>
 			</Grid>
 		</Grid>
 	);
 }
 
-function mapStateToProps({loginForm}) {
-	return {loginForm};
+function mapStateToProps({loginForm, files}) {
+	return {loginForm, files};
 }
 
 const composedComponent = compose(
@@ -48,6 +74,7 @@ const composedComponent = compose(
 		mapStateToProps,
 		{
 			fetchCurrentUserData,
+			uploadFile,
 		},
 	),
 );

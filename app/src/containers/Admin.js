@@ -36,6 +36,8 @@ function Admin(props) {
 	useEffect(() => {
 		props.fetchAllUsersData();
 	}, []);
+	// TODO: docstable of documents
+	// TODO: download docs
 	return (
 		<Grid item container spacing={0} justify="center">
 			<div className={classes.bg} />
