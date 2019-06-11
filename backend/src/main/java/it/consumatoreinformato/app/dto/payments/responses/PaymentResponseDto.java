@@ -17,7 +17,6 @@ import java.time.LocalDate;
 @Builder
 public class PaymentResponseDto {
 
-    private UserDto payer;
     private BigDecimal amount;
     private LocalDate date;
 

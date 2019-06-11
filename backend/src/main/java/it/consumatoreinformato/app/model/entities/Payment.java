@@ -1,5 +1,6 @@
 package it.consumatoreinformato.app.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -24,6 +25,7 @@ public class Payment {
 
     @ManyToOne
     @JoinColumn(name = "payer_id", nullable = false)
+    @JsonBackReference
     private User payer;
 
     @Column(name = "amount", nullable = false)

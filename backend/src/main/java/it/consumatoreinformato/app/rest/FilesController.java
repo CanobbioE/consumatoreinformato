@@ -44,7 +44,7 @@ public class FilesController {
     @ApiOperation(value = "Upload a file", notes = "Upload a file", response = UploadFileResponseDto.class, httpMethod = "POST")
     @PostMapping("/upload")
     @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
-    public ResponseEntity<UploadFileResponseDto> Upload(@Valid @RequestBody FileUploadDto fileUploadDto)
+    public ResponseEntity<UploadFileResponseDto> Upload(@Valid @ModelAttribute FileUploadDto fileUploadDto)
             throws InvalidFileNameException, FileStorageException, NotAuthenticatedException, UserNotFoundException {
         return ResponseEntity.ok(filesService.uploadFile(fileUploadDto, securityHandler.getPrincipalAsUser()));
     }

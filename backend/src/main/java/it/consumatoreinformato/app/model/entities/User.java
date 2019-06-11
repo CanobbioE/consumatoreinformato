@@ -1,5 +1,6 @@
 package it.consumatoreinformato.app.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import it.consumatoreinformato.app.config.ModelMapperHelper;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.collect.Sets;
@@ -59,10 +60,12 @@ public class User implements UserDetails {
     private String telephoneNumber;
 
     @OneToMany(mappedBy = "payer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Payment> payments;
 
 
     @OneToMany(mappedBy = "uploader", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Upload> uploads;
 
     @ElementCollection(fetch = FetchType.EAGER)

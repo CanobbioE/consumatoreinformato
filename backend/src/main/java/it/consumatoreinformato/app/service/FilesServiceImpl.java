@@ -38,10 +38,11 @@ public class FilesServiceImpl implements FilesService {
     // TODO: this is hardcoded, somehow it doesn't load from properties
     public FilesServiceImpl(FilesRepository filesRepository) {
         this.filesRepository = filesRepository;
-        this.fileStorageLocation = Paths.get("/uploads").toAbsolutePath().normalize();
+        this.fileStorageLocation = Paths.get("./uploads").toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
         } catch (Exception ex) {
+            System.out.println(ex);
         }
     }
 
@@ -54,15 +55,14 @@ public class FilesServiceImpl implements FilesService {
      */
     public UploadFileResponseDto uploadFile(FileUploadDto fileUploadDto, User uploader)
             throws FileStorageException, InvalidFileNameException {
+
         // Normalize file name
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(fileUploadDto.getFile().getOriginalFilename()));
-
-
+        // Check if the file's name contains invalid characters
+        if (fileName.contains("..")) {
+            throw new InvalidFileNameException(fileName);
+        }
         try {
-            // Check if the file's name contains invalid characters
-            if (fileName.contains("..")) {
-                throw new InvalidFileNameException(fileName);
-            }
 
             // Copy file to the target location (Replacing existing file with the same name)
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
@@ -87,7 +87,7 @@ public class FilesServiceImpl implements FilesService {
                     .fileType(fileUploadDto.getFile().getContentType())
                     .build();
         } catch (IOException ex) {
-            throw new FileStorageException(fileName, ex);
+            throw new FileStorageException(fileName, ex.toString());
         }
     }
 

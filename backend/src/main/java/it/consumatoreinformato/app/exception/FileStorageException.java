@@ -11,7 +11,7 @@ public class FileStorageException extends HandledException {
         super(HttpStatus.INTERNAL_SERVER_ERROR, InternalErrorCode.UPLOAD_FAILED);
     }
 
-    public FileStorageException(String filename, Exception ex) {
+    public FileStorageException(String filename, String ex) {
         this();
         this.addParam("filename", filename);
         this.addParam("exception", ex);
