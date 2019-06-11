@@ -19,5 +19,7 @@ public interface FilesService {
     List<UserInfoUploadDto> allUploads();
 
     List<Long> getOwner(String fileName);
+
+    List<UserInfoUploadDto> allUploads(Long userID);
 }
 

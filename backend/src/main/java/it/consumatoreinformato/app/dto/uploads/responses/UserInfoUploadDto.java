@@ -17,6 +17,7 @@ public class UserInfoUploadDto {
     private LocalDate date;
     private String filePath;
     private User uploader;
+    private String fileName;
 
     public static UserInfoUploadDto fromModel(Object model) {
         return ModelMapperHelper.mapToNew(model, UserInfoUploadDto.class);

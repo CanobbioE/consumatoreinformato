@@ -10,6 +10,7 @@ import it.consumatoreinformato.app.exception.InvalidFileNameException;
 import it.consumatoreinformato.app.model.entities.Upload;
 import it.consumatoreinformato.app.model.entities.User;
 import it.consumatoreinformato.app.repository.FilesRepository;
+import it.consumatoreinformato.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -32,12 +33,14 @@ import java.util.stream.Collectors;
 public class FilesServiceImpl implements FilesService {
 
     private Path fileStorageLocation;
+    private UserRepository userRepository;
     private final FilesRepository filesRepository;
 
     @Autowired
     // TODO: this is hardcoded, somehow it doesn't load from properties
-    public FilesServiceImpl(FilesRepository filesRepository) {
+    public FilesServiceImpl(FilesRepository filesRepository, UserRepository userRepository) {
         this.filesRepository = filesRepository;
+        this.userRepository = userRepository;
         this.fileStorageLocation = Paths.get("./uploads").toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
@@ -57,7 +60,10 @@ public class FilesServiceImpl implements FilesService {
             throws FileStorageException, InvalidFileNameException {
 
         // Normalize file name
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(fileUploadDto.getFile().getOriginalFilename()));
+        String fileName = uploader.getId().toString() +
+                "-" +
+                StringUtils.cleanPath(Objects.requireNonNull(fileUploadDto.getFile().getOriginalFilename()));
+
         // Check if the file's name contains invalid characters
         if (fileName.contains("..")) {
             throw new InvalidFileNameException(fileName);
@@ -69,7 +75,7 @@ public class FilesServiceImpl implements FilesService {
             Files.copy(fileUploadDto.getFile().getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/downloadFile/")
+                    .path("/files/download/")
                     .path(fileName)
                     .toUriString();
 
@@ -128,6 +134,17 @@ public class FilesServiceImpl implements FilesService {
                 .map(Upload::getUploader)
                 .map(User::getId)
                 .collect(Collectors.toList());
+    }
 
+    /**
+     * Retrieve all the files uploaded by the given user
+     *
+     * @param userID The uploader of the files
+     * @return a list of DTOs containing information for each uplaoded file
+     */
+    public List<UserInfoUploadDto> allUploads(Long userID) {
+        return filesRepository.findAllByUploader(userRepository.findById(userID).orElse(null)).stream()
+                .map(UserInfoUploadDto::fromModel)
+                .collect(Collectors.toList());
     }
 }

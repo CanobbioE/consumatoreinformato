@@ -12,6 +12,7 @@ import it.consumatoreinformato.app.util.SecurityHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -52,14 +53,19 @@ public class FilesController {
 
     @ApiOperation(value = "Download a file", notes = "Download a file", response = Resource.class, httpMethod = "GET")
     @GetMapping("/download/{fileName:.+}")
+   //  @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request)
-            throws FileNotFoundException, NotAuthenticatedException, UserNotFoundException, UserNotOwnerOfFileException {
+            throws FileNotFoundException,
+            InvalidJwtAuthenticationException,
+            UserNotFoundException,
+            NotAuthenticatedException,
+            UserNotOwnerOfFileException {
 
-        Long userID = securityHandler.getPrincipalAsUser().getId();
-        if (!filesService.getOwner(fileName).contains(userID)) {
+     /*   Long userID = securityHandler.getPrincipalAsUser().getId();
+        if (!filesService.getOwner(fileName).contains(userID) &&
+                securityHandler.getPrincipalRoles().contains("ROLE_ADMIN")) {
             throw new UserNotOwnerOfFileException(userID, fileName);
-        }
-
+        }*/
         // Load file as Resource
         Resource resource = filesService.loadFileAsResource(fileName);
 
@@ -83,11 +89,29 @@ public class FilesController {
                 .body(resource);
     }
 
-    @ApiOperation(value = "Get all the uploaded files", notes = "Get a list of all the uploaded files", responseContainer = "List", response = UserInfoUploadDto.class, httpMethod = "GET")
+    @ApiOperation(
+            value = "Get all the uploaded files",
+            notes = "Get a list of all the uploaded files",
+            responseContainer = "List",
+            response = UserInfoUploadDto.class,
+            httpMethod = "GET")
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<UserInfoUploadDto>> all() throws InvalidJwtAuthenticationException {
         return ResponseEntity.ok(filesService.allUploads());
+    }
+
+    @ApiOperation(
+            value = "Get all the uploaded files by a user",
+            notes = "Get a list of all the uploaded files by the calling user",
+            responseContainer = "List",
+            response = UserInfoUploadDto.class,
+            httpMethod = "GET")
+    @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
+    @GetMapping("/all-by-user/{id}")
+    public ResponseEntity<List<UserInfoUploadDto>> allByUser(@Valid @PathVariable String id) {
+        Long uid = Long.parseLong(id);
+        return ResponseEntity.ok(filesService.allUploads(uid));
     }
 
 
