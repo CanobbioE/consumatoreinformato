@@ -35,3 +35,7 @@ export const lastPayment = user => {
 		return new Date('1994-03-23');
 	return user.payments[user.payments.length - 1];
 };
+
+export const capitalize = s => {
+	return `${s.substr(0, 1).toUpperCase()}${s.substr(1)}`;
+};

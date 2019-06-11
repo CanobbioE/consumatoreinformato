@@ -11,7 +11,11 @@ export const pay = (tkn, email) => async dispatch => {
 		type: PAY_POST_LOADING,
 	});
 	try {
-		await axios.POST(Globals.baseURL + Globals.API.payment, {stripeToken: tkn});
+		await axios.post(
+			Globals.baseURL + Globals.API.payment,
+			{stripeToken: tkn.id},
+			{headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}},
+		);
 		dispatch({
 			type: PAY_POST_SUCCESS,
 		});
