@@ -24,6 +24,7 @@ export default class Globals {
 		files: {
 			upload: '/files/upload',
 			all: '/files/all',
+			allByUser: '/files/all-by-user',
 			download: '/files/download',
 		},
 	};
@@ -40,5 +41,6 @@ export default class Globals {
 		admin: '/amministrazione/',
 		collabs: '/collaboratori',
 		gdpr: '/privacy',
+		paymentSuccess: '/pagamento/successo',
 	};
 }

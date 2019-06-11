@@ -48,7 +48,7 @@ const Collabs = props => {
 	return (
 		<Grid item container spacing={0} justify="center">
 			<div className={classes.bg} />
-			<Grid item xs={10} className={classes.clearBg}>
+			<Grid item container xs={10} className={classes.clearBg}>
 				<Grid item container xs={12} justify="center" spacing={40}>
 					<Grid item xs={10}>
 						<Typography variant="h4" className={classes.title}>

@@ -3,14 +3,14 @@ import {
 	ADMIN_GET_USERS_FAIL,
 	ADMIN_GET_USERS_LOADING,
 } from '../utils/Types';
-import {getUser} from '../utils/Common';
+import {getUser, capitalize} from '../utils/Common';
 import parseError from '../utils/Errors';
 
 const INITIAL_STATE = {
 	loading: false,
 	error: '',
 	rows: [],
-	labels: ['ID', 'Nome', 'Cognome', 'Ultimo pagamento'],
+	labels1: ['ID', 'Nome', 'Cognome', 'E-mail', 'Ultimo pagamento'],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,13 +27,19 @@ export default (state = INITIAL_STATE, action) => {
 };
 
 function createRows(users) {
-	return users.map(
-		user =>
-			user.email !== getUser().email && {
+	const rows = [];
+	users.forEach(user => {
+		if (user.email !== getUser().email)
+			rows.push({
 				id: user.id,
-				name: user.name,
-				surname: user.surname,
-				lastPayDate: user.payments[user.payments.length - 1].date,
-			},
-	);
+				name: capitalize(user.name),
+				surname: capitalize(user.surname),
+				email: user.email,
+				lastPayDate:
+					user.payments && user.payments.length
+						? user.payments[user.payments.length - 1].date
+						: [],
+			});
+	});
+	return rows;
 }

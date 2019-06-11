@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
-import {Grid, Typography} from '@material-ui/core/';
+import {Grid, Typography, Button} from '@material-ui/core/';
 import {withStyles} from '@material-ui/core/styles';
-import {fetchAllUsersData} from '../actions';
+import {fetchAllUsersData, listAllFiles} from '../actions';
 import RequireAdmin from './RequireAdmin';
 import DocsTable from '../components/DocsTable';
 import bgHome from '../assets/images/bg/bg-home.jpg';
@@ -27,7 +27,7 @@ const styles = theme => ({
 		width: '100%',
 	},
 	title: {
-		textShadow: '2px 2px 24px #000',
+		textShadow: '2px 2px 24px #fff',
 	},
 });
 
@@ -35,9 +35,21 @@ function Admin(props) {
 	const {classes} = props;
 	useEffect(() => {
 		props.fetchAllUsersData();
+		props.listAllFiles();
 	}, []);
-	// TODO: docstable of documents
-	// TODO: download docs
+
+	const filesRows = props.files.rows2.map(file => ({
+		...file,
+		download: (
+			<Button
+				color="primary"
+				variant="contained"
+				size="small"
+				href={file.download}>
+				Scarica
+			</Button>
+		),
+	}));
 	return (
 		<Grid item container spacing={0} justify="center">
 			<div className={classes.bg} />
@@ -45,11 +57,17 @@ function Admin(props) {
 				<Grid item container xs={12} justify="center" spacing={40}>
 					<Grid item xs={10}>
 						<Typography variant="h4" className={classes.title}>
-							Utenti registrati
+							Utenti e Documenti
 						</Typography>
 					</Grid>
 					<Grid item xs={10}>
-						<DocsTable rows={props.admin.rows} labels={props.admin.labels} />
+						<DocsTable rows={props.admin.rows} labels={props.admin.labels1} />
+					</Grid>
+					<Grid item xs={10}>
+						<DocsTable
+							rows={filesRows.reverse()}
+							labels={props.files.labels2}
+						/>
 					</Grid>
 				</Grid>
 			</Grid>
@@ -57,8 +75,8 @@ function Admin(props) {
 	);
 }
 
-function mapStateToProps({admin}) {
-	return {admin};
+function mapStateToProps({admin, files}) {
+	return {admin, files};
 }
 
 const composedComponent = compose(
@@ -67,6 +85,7 @@ const composedComponent = compose(
 		mapStateToProps,
 		{
 			fetchAllUsersData,
+			listAllFiles,
 		},
 	),
 );

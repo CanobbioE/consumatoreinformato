@@ -21,11 +21,10 @@ function UploadFile(props) {
 	};
 	const handleSubmit = async e => {
 		e.preventDefault();
+		setFileValue('');
 		await props.onSubmit(file);
 		setFile(null);
-		setFileValue('');
 	};
-	// TODO nicer "done" icon
 	return (
 		<Paper>
 			<form onSubmit={handleSubmit}>
@@ -49,16 +48,25 @@ function UploadFile(props) {
 							/>
 						)}
 					</Grid>
-					{props.success && alert('Caricamento avvenuto con successo!')}
+
 					<Grid item container xs={12} justify="flex-end">
-						<Button
-							type="submit"
-							variant="contained"
-							color="primary"
-							disabled={!file}
-							className={classes.submit}>
-							Carica
-						</Button>
+						<Grid item xs={7}>
+							{props.success && (
+								<Typography color="primary" variant="body2">
+									Caricamento avvenuto con successo!
+								</Typography>
+							)}
+						</Grid>
+						<Grid item xs={2}>
+							<Button
+								type="submit"
+								variant="contained"
+								color="primary"
+								disabled={!file}
+								className={classes.submit}>
+								Carica
+							</Button>
+						</Grid>
 					</Grid>
 				</Grid>
 			</form>

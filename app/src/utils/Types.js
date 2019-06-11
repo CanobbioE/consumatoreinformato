@@ -38,10 +38,10 @@ export const FILE_UPLOAD_LOADING = 'file_upload_loading';
 export const FILE_UPLOAD_FAIL = 'file_upload_fail';
 export const FILE_UPLOAD_SUCCESS = 'file_upload_success';
 
-export const FILE_DOWNLOAD_LOADING = 'file_download_loading';
-export const FILE_DOWNLOAD_FAIL = 'file_download_fail';
-export const FILE_DOWNLOAD_SUCCESS = 'file_download_success';
-
 export const FILE_ALL_LOADING = 'file_all_loading';
 export const FILE_ALL_FAIL = 'file_all_fail';
 export const FILE_ALL_SUCCESS = 'file_all_success';
+
+export const FILE_USER_LOADING = 'file_user_loading';
+export const FILE_USER_FAIL = 'file_user_fail';
+export const FILE_USER_SUCCESS = 'file_user_success';
