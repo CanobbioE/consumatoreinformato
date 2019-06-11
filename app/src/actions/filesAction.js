@@ -53,7 +53,7 @@ export const downloadFile = fileName => async dispatch => {
 				headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
 			},
 		);
-		console.log(response);
+		console.log(response.data);
 		dispatch({
 			type: FILE_DOWNLOAD_SUCCESS,
 			payload: response,
@@ -75,7 +75,7 @@ export const listAllFiles = () => async dispatch => {
 		const response = await axios.get(Globals.baseURL + Globals.API.files.all, {
 			headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
 		});
-		console.log(response);
+		console.log(response.data);
 		dispatch({
 			type: FILE_ALL_SUCCESS,
 			payload: response,

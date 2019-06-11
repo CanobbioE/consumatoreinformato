@@ -48,7 +48,7 @@ function Personal(props) {
 					<Grid item xs={7}>
 						<UploadFile
 							success={props.files.success}
-							loading={props.files.lodaing}
+							loading={props.files.loading}
 							onSubmit={handleSubmit}
 						/>
 					</Grid>

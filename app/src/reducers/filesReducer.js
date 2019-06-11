@@ -26,7 +26,7 @@ export default (state = INITIAL_STATE, action) => {
 		case FILE_UPLOAD_FAIL:
 			return {...state, loading: false, error: parseError(action.payload)};
 		case FILE_UPLOAD_SUCCESS:
-			return {...state, success: true};
+			return {...state, success: true, loading: false};
 
 		case FILE_DOWNLOAD_LOADING:
 			return {...state, loading: true, error: '', success: false};
@@ -38,7 +38,12 @@ export default (state = INITIAL_STATE, action) => {
 				success: false,
 			};
 		case FILE_DOWNLOAD_SUCCESS:
-			return {...state, fileDownload: action.payload, success: true};
+			return {
+				...state,
+				fileDownload: action.payload,
+				success: true,
+				loading: false,
+			};
 
 		case FILE_ALL_LOADING:
 			return {...state, loading: true, error: '', success: false};
@@ -50,7 +55,12 @@ export default (state = INITIAL_STATE, action) => {
 				success: false,
 			};
 		case FILE_ALL_SUCCESS:
-			return {...state, files: [...state.files, action.payload], success: true};
+			return {
+				...state,
+				files: [...state.files, action.payload],
+				success: true,
+				loading: false,
+			};
 
 		default:
 			return {...state};

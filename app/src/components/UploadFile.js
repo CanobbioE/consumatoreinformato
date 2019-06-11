@@ -25,6 +25,7 @@ function UploadFile(props) {
 		setFile(null);
 		setFileValue('');
 	};
+	// TODO nicer "done" icon
 	return (
 		<Paper>
 			<form onSubmit={handleSubmit}>
@@ -48,8 +49,8 @@ function UploadFile(props) {
 							/>
 						)}
 					</Grid>
-					{props.success && 'CARICAMENTO AVVENUTO CON SUCCESSO'}
-					<Grid item xs={10}>
+					{props.success && alert('Caricamento avvenuto con successo!')}
+					<Grid item container xs={12} justify="flex-end">
 						<Button
 							type="submit"
 							variant="contained"
