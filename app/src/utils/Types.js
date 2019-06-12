@@ -33,3 +33,15 @@ export const ADMIN_GET_USERS_LOADING = 'admin_get_users_loading';
 export const PAY_POST_LOADING = 'pay_post_loading';
 export const PAY_POST_FAIL = 'pay_post_fail';
 export const PAY_POST_SUCCESS = 'pay_post_success';
+
+export const FILE_UPLOAD_LOADING = 'file_upload_loading';
+export const FILE_UPLOAD_FAIL = 'file_upload_fail';
+export const FILE_UPLOAD_SUCCESS = 'file_upload_success';
+
+export const FILE_ALL_LOADING = 'file_all_loading';
+export const FILE_ALL_FAIL = 'file_all_fail';
+export const FILE_ALL_SUCCESS = 'file_all_success';
+
+export const FILE_USER_LOADING = 'file_user_loading';
+export const FILE_USER_FAIL = 'file_user_fail';
+export const FILE_USER_SUCCESS = 'file_user_success';

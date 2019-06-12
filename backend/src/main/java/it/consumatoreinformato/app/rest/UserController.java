@@ -1,6 +1,7 @@
 package it.consumatoreinformato.app.rest;
 
 import com.stripe.exception.StripeException;
+import io.swagger.annotations.ApiImplicitParam;
 import it.consumatoreinformato.app.dto.users.requests.LoginDto;
 import it.consumatoreinformato.app.dto.users.requests.RegenerateTokenDto;
 import it.consumatoreinformato.app.dto.users.requests.RegistrationDto;
@@ -56,6 +57,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "Retrieve User Data", notes = "Fetches all the data of the current users", response = UserDto.class, httpMethod = "GET")
+    @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
     @GetMapping("/current")
     public ResponseEntity<UserDto> current()
             throws UserNotFoundException, NotAuthenticatedException {
@@ -65,6 +67,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "Retrieve Users Data", notes = "Fetches all the users data", responseContainer = "List", response = UserDto.class, httpMethod = "GET")
+    @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<UserDto>> all()

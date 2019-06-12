@@ -14,6 +14,7 @@ import Contatti from './containers/Contatti';
 import Collabs from './containers/Collabs';
 import Iscrizione from './containers/Iscrizione';
 import Payment from './containers/Payment';
+import PaymentSuccess from './containers/PaymentSuccess';
 import Login from './containers/Login';
 import NavBar from './components/NavBar';
 import Logo from './components/Logo';
@@ -51,10 +52,10 @@ class Router extends Component {
 							<Route exact path={Globals.routes.personal} component={Personal} />
 							<Route exact path={Globals.routes.contatti} component={Contatti} />
 							<Route exact path={Globals.routes.iscrizione} component={Iscrizione} />
+							<Route exact path={Globals.routes.paymentSuccess} component={PaymentSuccess} />
 						</div>
 						<Footer />
 					</BrowserRouter>
-					{/*TODO: footer */}
 				</Provider>
 			</MuiThemeProvider>
 		);

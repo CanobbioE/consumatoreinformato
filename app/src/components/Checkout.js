@@ -4,6 +4,7 @@ import Globals from '../config/Globals';
 
 const Checkout = props => (
 	<StripeCheckout
+		opened={props.onOpen}
 		name={props.name}
 		description={props.desc}
 		amount={props.amount}

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {withStyles} from '@material-ui/core/styles';
 import {
 	Grid,
@@ -8,7 +9,9 @@ import {
 	ListItemText,
 	Divider,
 	Typography,
+	Button,
 } from '@material-ui/core/';
+import Globals from '../../config/Globals';
 import './PaymentList.css';
 
 const styles = theme => ({
@@ -33,13 +36,14 @@ function PaymentList(props) {
 			{i !== props.items.length - 1 && <Divider />}
 		</Grid>
 	));
+	const scrollable = items.length >= 5 ? 'scrollbar' : '';
 	return (
 		<Paper>
 			<Grid
 				className={classes.grid}
 				item
 				container
-				xs={10}
+				xs={12}
 				spacing={16}
 				justify="center">
 				<Grid item xs={10}>
@@ -48,7 +52,16 @@ function PaymentList(props) {
 					</Typography>
 				</Grid>
 				<Grid item xs={10}>
-					<List className="scrollbar">{items}</List>
+					<List className={scrollable}>{items}</List>
+				</Grid>
+				<Grid item container xs={12} justify="flex-end">
+					<Button
+						component={Link}
+						to={Globals.routes.payment}
+						color="primary"
+						variant="contained">
+						Paga ora
+					</Button>
 				</Grid>
 			</Grid>
 		</Paper>

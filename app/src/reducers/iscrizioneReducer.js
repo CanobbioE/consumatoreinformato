@@ -19,7 +19,7 @@ export default (state = INITIAL_STATE, action) => {
 		case ISCR_FIELDS:
 			return {...state, loading: false, fields: {...action.payload}};
 		case ISCR_POST_SUCCESS:
-			return {...state, error: '', loading: false};
+			return {...state, error: '', loading: false, fields: {}};
 		case ISCR_POST_LOADING:
 			return {...state, error: '', loading: true};
 		default:

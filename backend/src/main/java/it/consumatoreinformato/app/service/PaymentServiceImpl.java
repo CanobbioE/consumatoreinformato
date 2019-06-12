@@ -47,14 +47,16 @@ public class PaymentServiceImpl implements PaymentService {
         chargeParams.put("amount", amount);
         chargeParams.put("currency", "eur");
         chargeParams.put("source", token);
-        chargeParams.put("description", "Iscrizione al sito ConsumatoreInformato.it");
+        chargeParams.put("description", "Iscrizione annuale al sito ConsumatoreInformato.it");
         chargeParams.put("receipt_email", email);
 
         return Charge.create(chargeParams);
     }
 
     /**
-     * Creates a Charge for a one time transaction made by a registered user
+     * Creates a Charge for a one time transaction made by a registered user,
+     * if the subscription is not yet expired the date for the transaction will be set to the expiration day
+     *
      * @param payer The user paying
      * @param token Transaction's identifier
      * @return The payment status
@@ -65,13 +67,22 @@ public class PaymentServiceImpl implements PaymentService {
         Charge charge = chargeCreditCard(payer.getEmail(), token);
         if (!charge.getPaid()) throw new PaymentFailedException((charge.getStatus()));
 
+        Payment lastPayment = paymentRepository.findFirstByPayerIdOrderByDateDesc(payer.getId()).orElse(null);
+        if (lastPayment != null) {
+            saveToRepo(charge, payer, lastPayment.getDate().plusDays(365));
+        } else {
+            saveToRepo(charge, payer, LocalDate.now());
+        }
+
+        return PaymentStatusDto.builder().paid(charge.getPaid()).build();
+    }
+
+    private void saveToRepo(Charge charge, User payer, LocalDate expDate) {
         paymentRepository.save(
                 Payment.builder()
                         .amount(new BigDecimal(charge.getAmount()))
-                        .date(LocalDate.now())
+                        .date(expDate.isAfter(LocalDate.now()) ? expDate : LocalDate.now())
                         .payer(payer)
                         .build());
-
-        return PaymentStatusDto.builder().paid(charge.getPaid()).build();
     }
 }

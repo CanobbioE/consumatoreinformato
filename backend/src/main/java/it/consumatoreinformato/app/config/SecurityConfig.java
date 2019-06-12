@@ -72,7 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/users/login",
                 "/users/register",
                 "/users/regenerate-token",
-                "/articles/all"
+                "/articles/all",
+                "/files/download/**"
         ).antMatchers(HttpMethod.OPTIONS);
     }
 

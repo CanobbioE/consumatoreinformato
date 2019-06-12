@@ -12,9 +12,13 @@ const styles = theme => ({
 		width: '100%',
 		marginTop: theme.spacing.unit * 8,
 		overflowX: 'auto',
+		maxHeight: '350px',
 	},
 	table: {
 		minWidth: 650,
+	},
+	scrollable: {
+		overflowY: 'scroll',
 	},
 });
 
@@ -38,7 +42,7 @@ function DocsTable(props) {
 				<TableHead>
 					<TableRow>{labels}</TableRow>
 				</TableHead>
-				<TableBody>
+				<TableBody className={classes.scrollable}>
 					{rows.map((row, i) => (
 						<TableRow key={i}>{row}</TableRow>
 					))}

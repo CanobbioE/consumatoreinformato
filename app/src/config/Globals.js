@@ -21,6 +21,12 @@ export default class Globals {
 			edit: '/articles/edit',
 			post: '/articles/create',
 		},
+		files: {
+			upload: '/files/upload',
+			all: '/files/all',
+			allByUser: '/files/all-by-user',
+			download: '/files/download',
+		},
 	};
 
 	// All the routes in this app
@@ -35,5 +41,6 @@ export default class Globals {
 		admin: '/amministrazione/',
 		collabs: '/collaboratori',
 		gdpr: '/privacy',
+		paymentSuccess: '/pagamento/successo',
 	};
 }

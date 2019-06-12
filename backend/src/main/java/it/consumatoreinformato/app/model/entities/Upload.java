@@ -1,5 +1,6 @@
 package it.consumatoreinformato.app.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -24,6 +25,7 @@ public class Upload {
 
     @ManyToOne
     @JoinColumn(name = "uploader_id", nullable = false)
+    @JsonBackReference
     private User uploader;
 
     @Column(name = "date")
@@ -31,5 +33,8 @@ public class Upload {
 
     @Column(name = "file")
     private String filePath;
+
+    @Column(name = "name")
+    private String fileName;
 
 }

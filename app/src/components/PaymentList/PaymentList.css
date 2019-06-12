@@ -1,6 +1,6 @@
 .scrollbar {
 	overflow-y: scroll;
-	max-height: 350px !important;
+	max-height: 300px !important;
 }
 
 .scrollbar::-webkit-scrollbar-track {
