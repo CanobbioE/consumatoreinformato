@@ -90,6 +90,11 @@ function NavBar(props) {
 								Amministrazione
 							</Button>
 						)}
+						<Button
+							color="inherit"
+							href="http://www.consumatoreinformato.blogspot.com">
+							Blog
+						</Button>
 					</Typography>
 
 					<div className={classes.menuButton}>
