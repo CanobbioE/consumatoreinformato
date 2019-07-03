@@ -1,5 +1,8 @@
 package it.consumatoreinformato.app.dto.messages.responses;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+import it.consumatoreinformato.app.config.ModelMapperHelper;
+import it.consumatoreinformato.app.dto.users.responses.UserBasicDetailsDto;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -10,8 +13,13 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-public class  MessageSentDto {
-    private Long sender;
-    private Long receiver;
+public class MessageSentDto {
+    private UserBasicDetailsDto sender;
+    private UserBasicDetailsDto receiver;
     private LocalDate date;
+
+
+    public static MessageSentDto fromModel(Object model) {
+        return ModelMapperHelper.mapToNew(model, MessageSentDto.class);
+    }
 }

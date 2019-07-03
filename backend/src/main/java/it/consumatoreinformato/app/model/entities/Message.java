@@ -2,6 +2,7 @@ package it.consumatoreinformato.app.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import it.consumatoreinformato.app.config.ModelMapperHelper;
 import lombok.*;
 
 import javax.persistence.*;
@@ -41,4 +42,10 @@ public class Message {
 
     @Column(name = "read")
     private Boolean read;
+
+
+    public static Message fromDto(Object dto) {
+        return ModelMapperHelper.mapToNew(dto, Message.class);
+    }
+
 }

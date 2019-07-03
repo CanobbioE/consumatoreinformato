@@ -13,5 +13,6 @@ public enum InternalErrorCode {
     INVALID_FILENAME,
     UPLOAD_FAILED,
     FILE_NOT_FOUND,
-    USER_NOT_OWNER
+    USER_NOT_OWNER,
+    MESSAGE_NOT_FOUND
 }

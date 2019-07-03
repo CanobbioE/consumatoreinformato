@@ -13,6 +13,5 @@ import java.time.LocalDate;
 @Builder
 public class ReadMessageDto {
     private Long sender;
-    private Long receiver;
     private LocalDate date;
 }
