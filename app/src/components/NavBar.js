@@ -92,7 +92,9 @@ function NavBar(props) {
 						)}
 						<Button
 							color="inherit"
-							href="http://www.consumatoreinformato.blogspot.com">
+							onClick={() =>
+								window.open('http://www.consumatoreinformato.blogspot.com')
+							}>
 							Blog
 						</Button>
 					</Typography>
