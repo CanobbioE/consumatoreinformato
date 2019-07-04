@@ -69,7 +69,7 @@ public class MessageServiceImpl implements MessageService {
      * @return a list of all the messages with the same receiver
      */
     public List<MessageDto> all(User receiver) {
-        return messageRepository.findAllByReceiverId(receiver.getId())
+        return messageRepository.findAllByReceiverIdOrSenderIdOrderByDate(receiver.getId(), receiver.getId())
                 .stream()
                 .map(MessageDto::fromModel)
                 .collect(Collectors.toList());
@@ -83,7 +83,7 @@ public class MessageServiceImpl implements MessageService {
      */
     public void read(User receiver, ReadMessageDto readMessageDto) throws MessageNotFoundException {
         // TODO: maybe find all before date and set them all to read = true
-        Message message = messageRepository.findByReceiverIdAndSenderIdAndDateAndRead(
+        Message message = messageRepository.findByReceiverIdAndSenderIdAndDateBeforeAndRead(
                 receiver.getId(),
                 readMessageDto.getSender(),
                 readMessageDto.getDate(),

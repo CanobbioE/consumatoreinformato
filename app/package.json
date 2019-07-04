@@ -12,6 +12,7 @@
 		"material-ui-icons": "^1.0.0-beta.36",
 		"material-ui-pickers": "^2.2.4",
 		"react": "^16.8.6",
+		"react-chat-window": "^1.2.1",
 		"react-dom": "^16.8.6",
 		"react-redux": "^6.0.1",
 		"react-router-dom": "^5.0.0",

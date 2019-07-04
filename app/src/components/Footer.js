@@ -7,8 +7,8 @@ import Globals from '../config/Globals';
 const styles = theme => ({
 	footer: {
 		backgroundColor: theme.palette.secondary.main,
-		marginTop: theme.spacing.unit * 8,
-		position: 'fixed',
+		marginTop: theme.spacing.unit * 2,
+		position: 'absolute',
 		bottom: 0,
 		width: '100%',
 	},

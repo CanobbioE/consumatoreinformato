@@ -17,6 +17,7 @@ public class MessageSentDto {
     private UserBasicDetailsDto sender;
     private UserBasicDetailsDto receiver;
     private LocalDate date;
+    private String content;
 
 
     public static MessageSentDto fromModel(Object model) {

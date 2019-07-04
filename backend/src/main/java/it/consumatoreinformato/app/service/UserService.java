@@ -23,5 +23,7 @@ public interface UserService {
     PaymentStatusDto register(RegistrationDto registrationDto) throws EmailAlreadyRegisteredException, StripeException, PaymentFailedException;
 
     RegenerateTokenResponseDto regenerateToken(RegenerateTokenDto regenerateTokenDto) throws UserNotFoundException, InvalidJwtRegenerationTokenException;
+
+    UserDto get(Long id) throws UserNotFoundException;
 }
 

@@ -1,8 +1,6 @@
 export default class Globals {
 	static port = '8080';
-	static baseURL = `${window.location.protocol}//${window.location.hostname}:${
-		Globals.port
-	}/app-service`;
+	static baseURL = `${window.location.protocol}//${window.location.hostname}:${Globals.port}/app-service`;
 
 	static stripeKey = 'pk_test_8UVonGHHfGmbESE24HpuSo6z';
 
@@ -15,6 +13,7 @@ export default class Globals {
 		userData: {
 			current: '/users/current',
 			all: '/users/all',
+			details: '/users/details',
 		},
 		articles: {
 			getAll: '/articles/all',
@@ -26,6 +25,12 @@ export default class Globals {
 			all: '/files/all',
 			allByUser: '/files/all-by-user',
 			download: '/files/download',
+		},
+		messages: {
+			send: '/messages/send',
+			read: '/messages/read',
+			new: '/messages/new',
+			all: 'messages/all',
 		},
 	};
 

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
    List<Message> findAllByReceiverIdAndRead(Long id, Boolean isRead);
-   List<Message> findAllByReceiverId(Long id);
-   Optional<Message> findByReceiverIdAndSenderIdAndDateAndRead(Long receiver, Long sender, LocalDate date, Boolean isRead);
+   List<Message> findAllByReceiverIdOrSenderIdOrderByDate(Long receiver, Long sender);
+   Optional<Message> findByReceiverIdAndSenderIdAndDateBeforeAndRead(Long receiver, Long sender, LocalDate date, Boolean isRead);
 }
 

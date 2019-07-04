@@ -58,8 +58,8 @@ public class MessagesController {
 
     }
 
-    @PatchMapping("/read")
-    @ApiOperation(value = "Mark all the messages previous to a given date as read", httpMethod = "PATCH")
+    @PostMapping("/read")
+    @ApiOperation(value = "Mark all the messages previous to a given date as read", httpMethod = "POST")
     @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
     public ResponseEntity<Void> read(@Valid @RequestBody ReadMessageDto readMessageDto)
             throws MessageNotFoundException, UserNotFoundException, NotAuthenticatedException{

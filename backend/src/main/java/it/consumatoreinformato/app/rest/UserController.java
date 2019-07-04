@@ -75,5 +75,16 @@ public class UserController {
         return ResponseEntity.ok( userService.getAll());
     }
 
+    @ApiOperation(value = "Retrieve a User Data", notes = "Fetches one user details",  response = UserDto.class, httpMethod = "GET")
+    @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
+    @GetMapping("/details")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<UserDto> details(@Valid @RequestParam Long id)
+            throws InvalidJwtAuthenticationException, UserNotFoundException {
+        return ResponseEntity.ok(userService.get(id));
+    }
+
+
+
 
 }
