@@ -40,6 +40,7 @@ const sedi = [
 		mail: 'torino@consumatoreinformato.it',
 		tel: '0110438066',
 		fax: '0110438066',
+		map: 'https://goo.gl/maps/VgtibhjTnGXh8CDy7',
 	},
 	{
 		city: 'Milano',
@@ -48,6 +49,7 @@ const sedi = [
 		addr: 'Via Compagnoni, 4 - Milano',
 		mail: 'milano@consumatoreinformato.it',
 		tel: '0280887408',
+		map: 'https://goo.gl/maps/aRetUWbZciGZBmys8',
 	},
 	{
 		city: 'Roma',
@@ -55,6 +57,7 @@ const sedi = [
 		addr: 'Via Bafile, 2 - Roma',
 		mail: 'roma@consumatoreinformato.it',
 		tel: '0692915650',
+		map: 'https://goo.gl/maps/JrkptodqVnE9vxek7',
 	},
 	{
 		city: 'Trento',
@@ -63,6 +66,7 @@ const sedi = [
 		addr: 'Via Santa Croce, 10 - Trento',
 		tel: '3313960694',
 		mail: 'trento@consumatoreinformato.it',
+		map: 'https://goo.gl/maps/THdDyfvNG15ZpLF49',
 	},
 	{
 		city: 'Cuneo',
@@ -70,12 +74,14 @@ const sedi = [
 		mail: 'cuneo@consumatoreinformato.it',
 		tel: '0174670617',
 		img: mapCN,
+		map: 'https://goo.gl/maps/tXR86futpRiCvEGJA',
 	},
 	{
 		city: 'Genova',
 		addr: 'Via della Libertà, 13 - Rapallo (Genova)',
 		mail: 'genova@consumatoreinformato.it',
 		img: mapGE,
+		map: 'https://goo.gl/maps/bHpgjEx7bdopbSyJ8',
 	},
 ];
 
@@ -91,6 +97,7 @@ function Contatti(props) {
 				mail={s.mail}
 				tel={s.tel}
 				fax={s.fax}
+				mapLink={s.map}
 			/>
 		</Grid>
 	));

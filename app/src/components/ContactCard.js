@@ -17,9 +17,12 @@ const styles = {
 
 function AboutCard(props) {
 	const {classes} = props;
+	const handleClick = () => {
+		window.open(props.mapLink);
+	};
 	return (
 		<Card raised elevation={2} className={classes.card}>
-			<CardActionArea>
+			<CardActionArea onClick={handleClick}>
 				<CardMedia
 					className={classes.media}
 					image={props.image}

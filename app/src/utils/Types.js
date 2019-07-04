@@ -45,3 +45,20 @@ export const FILE_ALL_SUCCESS = 'file_all_success';
 export const FILE_USER_LOADING = 'file_user_loading';
 export const FILE_USER_FAIL = 'file_user_fail';
 export const FILE_USER_SUCCESS = 'file_user_success';
+
+export const CHAT_GET_ALL_SUCCESS = 'chat_get_all_success';
+export const CHAT_GET_ALL_FAIL = 'chat_get_all_fail';
+
+export const CHAT_GET_NEW_SUCCESS = 'chat_get_new_success';
+export const CHAT_GET_NEW_FAIL = 'chat_get_new_fail';
+
+export const CHAT_POST_SUCCESS = 'chat_post_success';
+export const CHAT_POST_FAIL = 'chat_post_fail';
+
+export const CHAT_READ_SUCCESS = 'chat_read_success';
+export const CHAT_READ_FAIL = 'chat_read_fail';
+
+export const CHAT_SYSTEM_MESSAGE = 'chat_system_message';
+
+export const USER_GET_SUCCESS = 'USER_GET_SUCCESS';
+export const USER_GET_FAIL = 'user_get_fail';

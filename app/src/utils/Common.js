@@ -6,6 +6,7 @@ Date.daysBetween = (d1, d2) => {
 
 /*
  * User structure:
+ * id: 0
  * birthday: ""
  * birthplace: ""
  * codiceFiscale: ""

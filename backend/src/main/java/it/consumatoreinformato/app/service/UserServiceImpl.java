@@ -193,4 +193,14 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getAll() {
         return userRepository.findAll().stream().map(UserDto::fromModel).collect(Collectors.toList());
     }
+
+    /**
+     * Retrieves a user details
+     * @param id the identifier for the user
+     * @return a dto containing all the user details
+     * @throws UserNotFoundException if the user cannot be found
+     */
+    public UserDto get(Long id) throws  UserNotFoundException {
+        return UserDto.fromModel(userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id)));
+    }
 }

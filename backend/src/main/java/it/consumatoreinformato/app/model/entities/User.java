@@ -38,16 +38,16 @@ public class User implements UserDetails {
     @Column(name = "hash", nullable = false)
     private String hash;
 
-    @Column(name ="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="surname")
+    @Column(name = "surname")
     private String surname;
 
-    @Column(name="birthday")
+    @Column(name = "birthday")
     private LocalDate birthday;
 
-    @Column(name="birthplace")
+    @Column(name = "birthplace")
     private String birthplace;
 
     @Column(name = "codeice_fiscale")
@@ -63,6 +63,13 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<Payment> payments;
 
+    @OneToMany(mappedBy = "sender", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Message> sentMessages;
+
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Message> receivedMessages;
 
     @OneToMany(mappedBy = "uploader", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -76,7 +83,7 @@ public class User implements UserDetails {
 
     @PrePersist
     protected void onCreate() {
-        if (roles == null){
+        if (roles == null) {
             roles = Sets.newHashSet("ROLE_USER");
 //            roles = Lists.newArrayList("ROLE_USER");
         }
