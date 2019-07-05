@@ -3,7 +3,7 @@ package it.consumatoreinformato.app.dto.messages.requests;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
@@ -14,5 +14,5 @@ import java.time.LocalDate;
 public class SendMessageDto {
     private Long receiver;
     private String content;
-    private LocalDate date;
+    private LocalDateTime dateTime;
 }

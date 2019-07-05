@@ -69,31 +69,27 @@ public class MessageServiceImpl implements MessageService {
      * @return a list of all the messages with the same receiver
      */
     public List<MessageDto> all(User receiver) {
-        return messageRepository.findAllByReceiverIdOrSenderIdOrderByDate(receiver.getId(), receiver.getId())
+        return messageRepository.findAllByReceiverIdOrSenderIdOrderByDateTime(receiver.getId(), receiver.getId())
                 .stream()
                 .map(MessageDto::fromModel)
                 .collect(Collectors.toList());
     }
 
     /**
-     * Marks a message as read
+     * Marks all the messages previous to the specified one as read
      *
      * @param readMessageDto a DTO with the details to identify a message to be read
-     * @throws MessageNotFoundException if the message cannot be found
      */
-    public void read(User receiver, ReadMessageDto readMessageDto) throws MessageNotFoundException {
-        // TODO: maybe find all before date and set them all to read = true
-        Message message = messageRepository.findByReceiverIdAndSenderIdAndDateBeforeAndRead(
+    public void read(User receiver, ReadMessageDto readMessageDto) {
+        messageRepository.findByReceiverIdAndSenderIdAndDateTimeBeforeAndRead(
                 receiver.getId(),
                 readMessageDto.getSender(),
-                readMessageDto.getDate(),
-                false).orElseThrow(
-                () -> new MessageNotFoundException(
-                        userRepository.findById(readMessageDto.getSender()),
-                        userRepository.findById(receiver.getId()),
-                        readMessageDto.getDate()
-                ));
-        message.setRead(true);
-        messageRepository.save(message);
+                readMessageDto.getDateTime(),
+                false)
+                .forEach(m -> {
+                 m.setRead(true);
+                 messageRepository.save(m);
+                });
+        //.orElseThrow( () -> new MessageNotFoundException( userRepository.findById(readMessageDto.getSender()), userRepository.findById(receiver.getId()), readMessageDto.getDate() ));
     }
 }

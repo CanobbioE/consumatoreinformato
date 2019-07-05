@@ -5,7 +5,6 @@ import it.consumatoreinformato.app.dto.messages.requests.SendMessageDto;
 import it.consumatoreinformato.app.dto.messages.responses.MessageDto;
 import it.consumatoreinformato.app.dto.messages.responses.MessageReceivedDto;
 import it.consumatoreinformato.app.dto.messages.responses.MessageSentDto;
-import it.consumatoreinformato.app.exception.MessageNotFoundException;
 import it.consumatoreinformato.app.exception.UserNotFoundException;
 import it.consumatoreinformato.app.model.entities.User;
 
@@ -18,6 +17,6 @@ public interface MessageService {
 
     List<MessageDto> all(User receiver);
 
-    void read(User receiver, ReadMessageDto readMessageDto) throws MessageNotFoundException;
+    void read(User receiver, ReadMessageDto readMessageDto);
 }
 

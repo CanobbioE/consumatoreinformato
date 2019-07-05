@@ -7,6 +7,7 @@ import it.consumatoreinformato.app.model.entities.User;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 public class MessageReceivedDto {
     private UserBasicDetailsDto sender;
     private String content;
-    private LocalDate date;
+    private LocalDateTime dateTime;
 
     public static MessageReceivedDto fromModel(Object model) {
         return ModelMapperHelper.mapToNew(model, MessageReceivedDto.class);

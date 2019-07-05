@@ -62,3 +62,5 @@ export const CHAT_SYSTEM_MESSAGE = 'chat_system_message';
 
 export const USER_GET_SUCCESS = 'USER_GET_SUCCESS';
 export const USER_GET_FAIL = 'user_get_fail';
+
+export const CHAT_TIMER_SET = 'chat_timer_set';

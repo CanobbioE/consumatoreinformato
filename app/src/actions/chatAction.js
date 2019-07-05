@@ -10,15 +10,16 @@ import {
 	CHAT_SYSTEM_MESSAGE,
 	USER_GET_SUCCESS,
 	USER_GET_FAIL,
+	CHAT_TIMER_SET,
 } from '../utils/Types';
 import Globals from '../config/Globals';
 import axios from 'axios';
 
-export const sendMessage = (receiver, content, date) => async dispatch => {
+export const sendMessage = (receiver, content, dateTime) => async dispatch => {
 	try {
 		const response = await axios.post(
 			Globals.baseURL + Globals.API.messages.send,
-			{receiver, content, date},
+			{receiver, content, dateTime},
 			{
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -84,12 +85,11 @@ export const getNewMessages = () => async dispatch => {
 	}
 };
 
-export const readMessage = (sender, date) => async dispatch => {
-	console.log('reading');
+export const readMessage = (sender, dateTime) => async dispatch => {
 	try {
 		await axios.post(
 			Globals.baseURL + Globals.API.messages.read,
-			{sender, date},
+			{sender, dateTime},
 			{
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -142,4 +142,10 @@ export const fetchUserData = id => async dispatch => {
 			payload: e.response.data,
 		});
 	}
+};
+
+export const timerSet = () => {
+	return {
+		type: CHAT_TIMER_SET,
+	};
 };
