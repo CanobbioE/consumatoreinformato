@@ -6,6 +6,7 @@ import it.consumatoreinformato.app.dto.users.responses.UserBasicDetailsDto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 public class MessageSentDto {
     private UserBasicDetailsDto sender;
     private UserBasicDetailsDto receiver;
-    private LocalDate date;
+    private LocalDateTime dateTime;
     private String content;
 
 

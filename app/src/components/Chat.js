@@ -15,14 +15,15 @@ import {getUser} from '../utils/Common';
 
 const Chat = props => {
 	if (!getUser()) return null;
-	// window.setInterval(props.getNewMessages, 10000);
-	const [open, setOpen] = useState(false);
-	// TODO: this better
 	useEffect(() => {
-		getAllMessages();
-		fetchUserData(props.chat.receiver);
+		props.getAllMessages();
+		props.fetchUserData(props.chat.receiver);
+		if (!props.chat.timerSet) {
+			window.setInterval(props.getNewMessages, 5000);
+		}
 	}, []);
 
+	const [open, setOpen] = useState(false);
 	const handleMessageSent = async m => {
 		await props.sendMessage(props.chat.receiver, m.data.text, new Date());
 	};
@@ -40,8 +41,7 @@ const Chat = props => {
 			props.chat.rawMessageList.length &&
 			props.chat.rawMessageList[props.chat.rawMessageList.length - 1];
 		if (!lastMessage) return;
-		// TODO: fix this
-		props.readMessage(lastMessage.sender.id, lastMessage.date);
+		props.readMessage(lastMessage.sender.id, new Date());
 	};
 
 	return (

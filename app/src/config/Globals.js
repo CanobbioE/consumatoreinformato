@@ -30,7 +30,7 @@ export default class Globals {
 			send: '/messages/send',
 			read: '/messages/read',
 			new: '/messages/new',
-			all: 'messages/all',
+			all: '/messages/all',
 		},
 	};
 

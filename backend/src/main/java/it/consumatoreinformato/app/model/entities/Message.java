@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
@@ -35,7 +36,7 @@ public class Message {
     private User receiver;
 
     @Column(name = "date")
-    private LocalDate date;
+    private LocalDateTime dateTime;
 
     @Column(name = "content", columnDefinition="TEXT")
     private String content;

@@ -62,7 +62,7 @@ public class MessagesController {
     @ApiOperation(value = "Mark all the messages previous to a given date as read", httpMethod = "POST")
     @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
     public ResponseEntity<Void> read(@Valid @RequestBody ReadMessageDto readMessageDto)
-            throws MessageNotFoundException, UserNotFoundException, NotAuthenticatedException{
+            throws UserNotFoundException, NotAuthenticatedException{
         messageService.read(securityHandler.getPrincipalAsUser(), readMessageDto);
         return ResponseEntity.ok().build();
     }

@@ -10,6 +10,7 @@ import {
 	CHAT_READ_SUCCESS,
 	USER_GET_SUCCESS,
 	USER_GET_FAIL,
+	CHAT_TIMER_SET,
 } from '../utils/Types';
 import parseError from '../utils/Errors';
 import {getUser} from '../utils/Common';
@@ -23,10 +24,13 @@ const INITIAL_STATE = {
 	sender: getUser() && getUser().id,
 	receiver: 100002,
 	receiverInfo: 'Consumatore Informato',
+	timerSet: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
+		case CHAT_TIMER_SET:
+			return {...state, timerSet: true};
 		case CHAT_GET_ALL_SUCCESS:
 			return {
 				...state,
