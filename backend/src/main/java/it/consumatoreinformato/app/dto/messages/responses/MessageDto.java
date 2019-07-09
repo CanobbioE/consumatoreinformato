@@ -21,6 +21,7 @@ public class MessageDto {
     private String content;
     private LocalDateTime dateTime;
     private Boolean read;
+    private Long id;
 
     public static MessageDto fromModel(Object model) {
         return ModelMapperHelper.mapToNew(model, MessageDto.class);

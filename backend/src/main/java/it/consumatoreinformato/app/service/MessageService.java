@@ -15,7 +15,7 @@ public interface MessageService {
 
     List<MessageReceivedDto> unreads(User receiver);
 
-    List<MessageDto> all(User receiver);
+    List<MessageDto> all(Long user1);
 
     void read(User receiver, ReadMessageDto readMessageDto);
 }

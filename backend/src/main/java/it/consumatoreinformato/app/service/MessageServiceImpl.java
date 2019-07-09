@@ -55,21 +55,21 @@ public class MessageServiceImpl implements MessageService {
      * @return a list of messages that had the field "read" set to false
      */
     public List<MessageReceivedDto> unreads(User receiver) {
-        List<MessageReceivedDto> messageReceivedDtos = messageRepository.findAllByReceiverIdAndRead(receiver.getId(), false)
+        return messageRepository.findAllByReceiverIdAndRead(receiver.getId(), false)
                 .stream()
                 .map(MessageReceivedDto::fromModel)
                 .collect(Collectors.toList());
-        return messageReceivedDtos;
     }
 
     /**
-     * Retrieve all the messages received by the user
+     * Retrieve all the messages sent/received by the logged user
      *
-     * @param receiver the receiver of the messages
-     * @return a list of all the messages with the same receiver
+     * @param user1 one of the two ends of the communication
+     * @return a list of all the messages from/to the logged user
      */
-    public List<MessageDto> all(User receiver) {
-        return messageRepository.findAllByReceiverIdOrSenderIdOrderByDateTime(receiver.getId(), receiver.getId())
+    public List<MessageDto> all(Long user1) {
+        // First we take all the messages received or sent by the logged in user
+        return messageRepository.findTop1000ByReceiverIdOrSenderIdOrderByDateTime(user1, user1)
                 .stream()
                 .map(MessageDto::fromModel)
                 .collect(Collectors.toList());

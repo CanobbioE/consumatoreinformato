@@ -54,7 +54,7 @@ public class MessagesController {
     @ApiOperation(value = "Retrieve all the messages sent and received by the principal", response = MessageDto.class, responseContainer = "List", httpMethod = "GET")
     @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
     public ResponseEntity<List<MessageDto>> all() throws UserNotFoundException, NotAuthenticatedException{
-        return ResponseEntity.ok(messageService.all(securityHandler.getPrincipalAsUser()));
+        return ResponseEntity.ok(messageService.all(securityHandler.getPrincipalAsUser().getId()));
 
     }
 

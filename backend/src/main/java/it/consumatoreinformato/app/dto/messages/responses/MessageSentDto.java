@@ -19,6 +19,7 @@ public class MessageSentDto {
     private UserBasicDetailsDto receiver;
     private LocalDateTime dateTime;
     private String content;
+    private Long id;
 
 
     public static MessageSentDto fromModel(Object model) {

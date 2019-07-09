@@ -43,7 +43,9 @@ function NavBar(props) {
 	const bell =
 		props.loginForm.token !== '' && !isAdmin(props.loginForm.user) ? (
 			<Bell lastPayment={lastPayment(props.loginForm.user)} />
-		) : null;
+		) : (
+			<Bell newMessages={props.chat.newMessagesList} />
+		);
 
 	return (
 		<div className={classes.root}>
@@ -109,8 +111,8 @@ function NavBar(props) {
 	);
 }
 
-function mapStateToProps({loginForm}) {
-	return {loginForm};
+function mapStateToProps({loginForm, chat}) {
+	return {loginForm, chat};
 }
 
 const composedComponent = connect(
