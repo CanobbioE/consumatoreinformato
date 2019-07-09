@@ -11,6 +11,8 @@ import {
 	USER_GET_SUCCESS,
 	USER_GET_FAIL,
 	CHAT_TIMER_SET,
+	CHAT_SET_RECEIVER,
+	CHAT_TOGGLE_OPEN,
 } from '../utils/Types';
 import Globals from '../config/Globals';
 import axios from 'axios';
@@ -42,7 +44,7 @@ export const sendMessage = (receiver, content, dateTime) => async dispatch => {
 export const getAllMessages = () => async dispatch => {
 	try {
 		const response = await axios.get(
-			Globals.baseURL + Globals.API.messages.all,
+			`${Globals.baseURL}${Globals.API.messages.all}`,
 			{
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -144,8 +146,14 @@ export const fetchUserData = id => async dispatch => {
 	}
 };
 
-export const timerSet = () => {
-	return {
-		type: CHAT_TIMER_SET,
-	};
-};
+export const timerSet = () => ({type: CHAT_TIMER_SET});
+
+export const setReceiver = receiver => ({
+	type: CHAT_SET_RECEIVER,
+	payload: receiver,
+});
+
+export const toggleChatOpen = (open = false) => ({
+	type: CHAT_TOGGLE_OPEN,
+	payload: open,
+});

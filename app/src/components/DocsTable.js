@@ -1,11 +1,14 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableRow,
+	Paper,
+	Button,
+} from '@material-ui/core';
 
 const styles = theme => ({
 	root: {
@@ -28,7 +31,13 @@ function DocsTable(props) {
 	const rows = props.rows.map(row =>
 		Object.keys(row).map((key, i) => (
 			<TableCell key={i} component={i === 0 ? 'th' : ''} scope="row">
-				{row[key]}
+				{key !== 'btn' ? (
+					row[key]
+				) : (
+					<Button onClick={() => props.onClick(row.id)} size="small">
+						{row[key]}
+					</Button>
+				)}
 			</TableCell>
 		)),
 	);

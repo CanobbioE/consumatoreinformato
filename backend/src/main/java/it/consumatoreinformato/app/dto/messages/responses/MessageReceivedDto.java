@@ -19,6 +19,7 @@ public class MessageReceivedDto {
     private UserBasicDetailsDto sender;
     private String content;
     private LocalDateTime dateTime;
+    private Long id;
 
     public static MessageReceivedDto fromModel(Object model) {
         return ModelMapperHelper.mapToNew(model, MessageReceivedDto.class);

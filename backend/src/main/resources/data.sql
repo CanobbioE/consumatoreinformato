@@ -1,5 +1,5 @@
 insert into users (`id`, `email`, `hash`, `name`, `surname`) values
-(100002, 'info@consumatoreinformato.it', '{bcrypt}$2a$10$D/0V22sHAvsIXcimVIJ3T.55nFcrDWXHSSTDRsfSa5JKaCtNyn8zW', 'admin', 'admin', ), -- password: password
+(100002, 'info@consumatoreinformato.it', '{bcrypt}$2a$10$D/0V22sHAvsIXcimVIJ3T.55nFcrDWXHSSTDRsfSa5JKaCtNyn8zW', 'Consumatore', 'Informato', ), -- password: password
 (100004, 'y@a.com', '{bcrypt}$2a$10$D/0V22sHAvsIXcimVIJ3T.55nFcrDWXHSSTDRsfSa5JKaCtNyn8zW', 'Mario', 'Rossi', ), -- password: password
 (100005, 'z@a.com', '{bcrypt}$2a$10$D/0V22sHAvsIXcimVIJ3T.55nFcrDWXHSSTDRsfSa5JKaCtNyn8zW', 'Giovanni', 'Bianchi', ), -- password: password
 (100006, 'w@a.com', '{bcrypt}$2a$10$D/0V22sHAvsIXcimVIJ3T.55nFcrDWXHSSTDRsfSa5JKaCtNyn8zW', 'Fabrizio', 'Verdi', ), -- password: password

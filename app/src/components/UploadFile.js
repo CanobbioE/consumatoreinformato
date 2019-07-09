@@ -8,6 +8,9 @@ const styles = theme => ({
 		marginTop: theme.spacing.unit * 2,
 		height: 'auto',
 	},
+	submit: {
+		heigth: 'auto',
+	},
 });
 
 function UploadFile(props) {
@@ -39,6 +42,7 @@ function UploadFile(props) {
 						<LoadingIcon show={props.loading} />
 						{!props.loading && (
 							<Input
+								className={classes.submit}
 								value={fileValue}
 								type="file"
 								label="Documento"

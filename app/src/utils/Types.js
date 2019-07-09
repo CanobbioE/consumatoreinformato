@@ -64,3 +64,7 @@ export const USER_GET_SUCCESS = 'USER_GET_SUCCESS';
 export const USER_GET_FAIL = 'user_get_fail';
 
 export const CHAT_TIMER_SET = 'chat_timer_set';
+
+export const CHAT_SET_RECEIVER = 'chat_set_receiver';
+
+export const CHAT_TOGGLE_OPEN = 'chat_toggle_open';

@@ -3,7 +3,15 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {Grid, Typography, Button} from '@material-ui/core/';
 import {withStyles} from '@material-ui/core/styles';
-import {fetchAllUsersData, listAllFiles} from '../actions';
+import {
+	fetchAllUsersData,
+	listAllFiles,
+	setReceiver,
+	fetchUserData,
+	toggleChatOpen,
+	getAllMessages,
+} from '../actions';
+
 import RequireAdmin from './RequireAdmin';
 import DocsTable from '../components/DocsTable';
 import bgHome from '../assets/images/bg/bg-home.jpg';
@@ -50,6 +58,14 @@ function Admin(props) {
 			</Button>
 		),
 	}));
+
+	const handleClick = receiver => {
+		props.setReceiver(receiver);
+		props.fetchUserData(receiver);
+		props.getAllMessages(receiver);
+		props.toggleChatOpen(true);
+	};
+
 	return (
 		<Grid item container spacing={0} justify="center">
 			<div className={classes.bg} />
@@ -61,7 +77,11 @@ function Admin(props) {
 						</Typography>
 					</Grid>
 					<Grid item xs={10}>
-						<DocsTable rows={props.admin.rows} labels={props.admin.labels1} />
+						<DocsTable
+							onClick={handleClick}
+							rows={props.admin.rows}
+							labels={props.admin.labels1}
+						/>
 					</Grid>
 					<Grid item xs={10}>
 						<DocsTable
@@ -86,6 +106,10 @@ const composedComponent = compose(
 		{
 			fetchAllUsersData,
 			listAllFiles,
+			setReceiver,
+			fetchUserData,
+			toggleChatOpen,
+			getAllMessages,
 		},
 	),
 );
