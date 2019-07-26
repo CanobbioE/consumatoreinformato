@@ -13,6 +13,7 @@ import {
 	CHAT_TIMER_SET,
 	CHAT_SET_RECEIVER,
 	CHAT_TOGGLE_OPEN,
+	CHAT_SET_INTERVAL_ID,
 } from '../utils/Types';
 import Globals from '../config/Globals';
 import axios from 'axios';
@@ -146,7 +147,7 @@ export const fetchUserData = id => async dispatch => {
 	}
 };
 
-export const timerSet = () => ({type: CHAT_TIMER_SET});
+export const setTimer = val => ({type: CHAT_TIMER_SET, payload: val});
 
 export const setReceiver = receiver => ({
 	type: CHAT_SET_RECEIVER,
@@ -156,4 +157,9 @@ export const setReceiver = receiver => ({
 export const toggleChatOpen = (open = false) => ({
 	type: CHAT_TOGGLE_OPEN,
 	payload: open,
+});
+
+export const setChatIntervalID = id => ({
+	type: CHAT_SET_INTERVAL_ID,
+	payload: id,
 });

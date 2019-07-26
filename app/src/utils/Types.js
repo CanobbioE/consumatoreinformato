@@ -68,3 +68,4 @@ export const CHAT_TIMER_SET = 'chat_timer_set';
 export const CHAT_SET_RECEIVER = 'chat_set_receiver';
 
 export const CHAT_TOGGLE_OPEN = 'chat_toggle_open';
+export const CHAT_SET_INTERVAL_ID = 'chat_set_interval_id';

@@ -1,5 +1,6 @@
 import {
 	CHAT_SYSTEM_MESSAGE,
+	CHAT_SET_INTERVAL_ID,
 	CHAT_GET_ALL_SUCCESS,
 	CHAT_GET_ALL_FAIL,
 	CHAT_GET_NEW_SUCCESS,
@@ -18,27 +19,35 @@ import parseError from '../utils/Errors';
 import {getUser} from '../utils/Common';
 
 const INITIAL_STATE = {
-	messageList: [],
-	rawMessageList: {},
-	newMessagesList: {},
+	messageList: [], // messages array formatted for react-chat-window
+	rawMessageList: {}, // map where key=receiver and value=array of rawMesages (aka JSON[])
+	newMessagesList: {}, // map where key=receiver
 	error: '',
 	sender: getUser() && getUser().id,
 	receiver: 100002,
 	receiverInfo: 'Consumatore Informato',
 	timerSet: false,
 	chatOpen: false,
+	intervalID: -1,
 };
 
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case CHAT_TIMER_SET:
-			return {...state, timerSet: true};
+			return {
+				...state,
+				timerSet: action.payload,
+				sender: getUser() && getUser().id,
+			};
 		case CHAT_GET_ALL_SUCCESS:
 			return getAll(action.payload, state);
 		case CHAT_GET_ALL_FAIL:
 			return {...state, error: parseError(action.payload)};
 		case CHAT_GET_NEW_SUCCESS:
-			return getNew(action.payload, state);
+			return {
+				...getNew(action.payload, state),
+				sender: getUser() && getUser().id,
+			};
 		case CHAT_GET_NEW_FAIL:
 			return {...state, error: parseError(action.payload)};
 		case CHAT_POST_SUCCESS:
@@ -62,6 +71,8 @@ export default (state = INITIAL_STATE, action) => {
 			return setReceiver(action.payload, state);
 		case CHAT_TOGGLE_OPEN:
 			return {...state, chatOpen: action.payload || !state.chatOpen};
+		case CHAT_SET_INTERVAL_ID:
+			return {...state, intervalID: action.payload};
 		default:
 			return {...state};
 	}
@@ -81,12 +92,12 @@ export default (state = INITIAL_STATE, action) => {
 const getNew = (list, state) => {
 	const newState = {...state};
 	if (!list || !list.length) return newState;
-	if (!state.rawMessageList[state.receiver]) {
-		newState.rawMessageList[state.receiver] = [];
+	const receiver = list
+		.map(m => (m.sender.id !== state.sender ? m.sender.id : null))
+		.filter(n => n)[0];
+	if (!state.rawMessageList[receiver]) {
+		newState.rawMessageList[receiver] = [];
 	}
-	const receiver = list.map(m =>
-		m.sender.id !== state.sender ? m.sender.id : m.receiver.id,
-	)[0];
 	const rawIDs = newState.rawMessageList[receiver].map(m => m.id);
 	const allNewRawMessages = list.filter(m => !rawIDs.includes(m.id));
 	const onlyTheirsNewRawMessages = list.filter(
@@ -106,10 +117,12 @@ const getNew = (list, state) => {
 		...onlyTheirsNewRawMessages,
 	];
 
-	newState.messageList = [
-		...newState.messageList,
-		...messageAdapter(allNewRawMessages, state.sender),
-	];
+	if (state.receiver === receiver) {
+		newState.messageList = [
+			...newState.messageList,
+			...messageAdapter(allNewRawMessages, state.sender),
+		];
+	}
 
 	return newState;
 };
@@ -120,7 +133,7 @@ const getNew = (list, state) => {
 // 1 - Divide messages in a map:
 //   a - For each message m:
 //    a1 - Wherever m.sender.id != state.sender put m in raw[m.sender.id]
-//    a2 - Wherever m.receiver != state.sender put m in ram[m.receiver.id]
+//    a2 - Wherever m.receiver != state.sender put m in raw[m.receiver.id]
 //   b - return the map
 // 2 - Put the map in rawMessageList
 // 3 - Put the parsed rawMessageList[state.receiver] in messageList

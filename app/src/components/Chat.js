@@ -11,6 +11,8 @@ import {
 	systemMessage,
 	fetchUserData,
 	toggleChatOpen,
+	setTimer,
+	setChatIntervalID,
 } from '../actions';
 import {getUser} from '../utils/Common';
 
@@ -20,7 +22,8 @@ const Chat = props => {
 		props.getAllMessages();
 		props.fetchUserData(props.chat.receiver);
 		if (!props.chat.timerSet) {
-			window.setInterval(props.getNewMessages, 5000);
+			props.setTimer(true);
+			props.setChatIntervalID(window.setInterval(props.getNewMessages, 5000));
 		}
 	}, []);
 
@@ -82,9 +85,11 @@ const composedComponent = compose(
 			readMessage,
 			getAllMessages,
 			getNewMessages,
+			setTimer,
 			systemMessage,
 			fetchUserData,
 			toggleChatOpen,
+			setChatIntervalID,
 		},
 	),
 );
