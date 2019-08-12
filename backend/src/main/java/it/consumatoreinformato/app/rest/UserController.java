@@ -2,10 +2,9 @@ package it.consumatoreinformato.app.rest;
 
 import com.stripe.exception.StripeException;
 import io.swagger.annotations.ApiImplicitParam;
-import it.consumatoreinformato.app.dto.users.requests.LoginDto;
-import it.consumatoreinformato.app.dto.users.requests.RegenerateTokenDto;
-import it.consumatoreinformato.app.dto.users.requests.RegistrationDto;
+import it.consumatoreinformato.app.dto.users.requests.*;
 import it.consumatoreinformato.app.dto.users.responses.LoginResponseDto;
+import it.consumatoreinformato.app.dto.users.responses.PasswordDto;
 import it.consumatoreinformato.app.dto.users.responses.RegenerateTokenResponseDto;
 import it.consumatoreinformato.app.dto.payments.responses.PaymentStatusDto;
 import it.consumatoreinformato.app.dto.users.responses.UserDto;
@@ -62,7 +61,7 @@ public class UserController {
     public ResponseEntity<UserDto> current()
             throws UserNotFoundException, NotAuthenticatedException {
         return ResponseEntity.ok(
-                UserDto.fromModel( userService.getByEmail(securityHandler.getPrincipalAsUser().getEmail()) )
+                UserDto.fromModel(userService.getByEmail(securityHandler.getPrincipalAsUser().getEmail()))
         );
     }
 
@@ -72,16 +71,33 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<UserDto>> all()
             throws InvalidJwtAuthenticationException {
-        return ResponseEntity.ok( userService.getAll());
+        return ResponseEntity.ok(userService.getAll());
     }
 
-    @ApiOperation(value = "Retrieve a User Data", notes = "Fetches one user details",  response = UserDto.class, httpMethod = "GET")
+    @ApiOperation(value = "Retrieve a User Data", notes = "Fetches one user details", response = UserDto.class, httpMethod = "GET")
     @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
     @GetMapping("/details/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserDto> details(@Valid @PathVariable Long id)
             throws InvalidJwtAuthenticationException, UserNotFoundException {
         return ResponseEntity.ok(userService.get(id));
+    }
+
+    @ApiOperation(value = "Account registration by an admin", notes = "Force a user's registration", response = UserDto.class, httpMethod = "POST")
+    @PostMapping("/force-register")
+    @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<UserDto> forceRegister(@Valid @RequestBody ForceRegistrationDto registrationDto)
+            throws EmailAlreadyRegisteredException {
+        return ResponseEntity.ok(userService.forceRegister(registrationDto));
+    }
+
+    @ApiOperation(value = "Change password", notes = "Changes the current user password", response = PasswordDto.class, httpMethod = "POST")
+    @PostMapping("/change-password")
+    @ApiImplicitParam(name = "Authorization", dataType = "string", paramType = "header", required = true)
+    public ResponseEntity<PasswordDto> changePassword(@Valid @RequestBody NewPasswordDto newPasswordDto)
+            throws UserNotFoundException, NotAuthenticatedException {
+        return ResponseEntity.ok(userService.changePassword(securityHandler.getPrincipalAsUser(), newPasswordDto.getPassword()));
     }
 
 
