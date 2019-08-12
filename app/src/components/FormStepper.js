@@ -24,6 +24,9 @@ const styles = theme => ({
 			display: 'none',
 		},
 	},
+	error: {
+		marginTop: theme.spacing.unit * 2,
+	},
 });
 
 const FormStepper = props => {
@@ -67,51 +70,54 @@ const FormStepper = props => {
 				variant="contained"
 				color="primary"
 				onClick={next}
-				disabled={shouldDisable()}
+				disabled={shouldDisable() && !props.skippable}
 				className={classes.button}>
 				Avanti
 			</Button>
 		);
+	const content = (
+		<Grid
+			item
+			container
+			xs={12}
+			justify="center"
+			spacing={40}
+			direction="column"
+			alignItems="center">
+			{props.title && (
+				<Grid item xs={10}>
+					<Typography variant="h4" className={classes.title}>
+						{props.title}
+					</Typography>
+				</Grid>
+			)}
+			<Grid item xs={10}>
+				<Stepper className={classes.steps} activeStep={activeStep}>
+					{labels}
+				</Stepper>
+			</Grid>
+			<Grid item xs={10}>
+				<LoadingIcon show={props.loading} />
+				{!props.loading && props.steps[activeStep]}
+			</Grid>
+			<Grid item xs={10}>
+				<Button
+					disabled={activeStep === 0}
+					onClick={back}
+					className={classes.button}>
+					Indietro
+				</Button>
+				{nextButton}
+				<Typography variant="caption" color="error" className={classes.error}>
+					{props.error}
+				</Typography>
+			</Grid>
+		</Grid>
+	);
 
 	return (
 		<form onSubmit={props.onSubmit}>
-			<Paper>
-				<Grid
-					item
-					container
-					xs={12}
-					justify="center"
-					spacing={40}
-					direction="column"
-					alignItems="center">
-					<Grid item xs={10}>
-						<Typography variant="h4" className={classes.title}>
-							Iscrizione
-						</Typography>
-					</Grid>
-					<Grid item xs={10}>
-						<Stepper className={classes.steps} activeStep={activeStep}>
-							{labels}
-						</Stepper>
-					</Grid>
-					<Grid item xs={10}>
-						<LoadingIcon show={props.loading} />
-						{!props.loading && props.steps[activeStep]}
-					</Grid>
-					<Grid item xs={10}>
-						<Button
-							disabled={activeStep === 0}
-							onClick={back}
-							className={classes.button}>
-							Indietro
-						</Button>
-						{nextButton}
-						<Typography variant="caption" color="error">
-							{props.error}
-						</Typography>
-					</Grid>
-				</Grid>
-			</Paper>
+			{props.disablePaper ? content : <Paper> {content} </Paper>}
 		</form>
 	);
 };

@@ -43,9 +43,7 @@ function createRows(users, state) {
 					user.payments && user.payments.length
 						? user.payments[user.payments.length - 1].date
 						: [],
-				btn: state.new
-					? `Contatta (nuovi messaggi: ${state.new[user.id]})`
-					: 'Contatta',
+				btn: 'Contatta',
 			});
 	});
 	return rows;

@@ -34,7 +34,10 @@ function DocsTable(props) {
 				{key !== 'btn' ? (
 					row[key]
 				) : (
-					<Button onClick={() => props.onClick(row.id)} size="small">
+					<Button
+						onClick={() => props.onClick(row.id)}
+						size="small"
+						variant="outlined">
 						{row[key]}
 					</Button>
 				)}

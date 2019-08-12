@@ -105,8 +105,13 @@ function Contatti(props) {
 	return (
 		<Grid item container spacing={0} justify="center">
 			<div className={classes.bg} />
-			<Grid item container xs={10} spacing={40} className={classes.clearBg}>
-				<Grid item xs={10}>
+			<Grid
+				container
+				xs={10}
+				spacing={40}
+				className={classes.clearBg}
+				justify="center">
+				<Grid item xs={12}>
 					<Typography variant="h4" className={classes.title}>
 						Le nostre sedi
 					</Typography>

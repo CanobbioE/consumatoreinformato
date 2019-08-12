@@ -38,6 +38,7 @@ function Iscrizione(props) {
 			<div className={classes.bg} />
 			<Grid item xs={6} className={classes.clearBg}>
 				<FormIscrizione
+					title="Iscrizione"
 					loading={props.iscrForm.loading}
 					onSubmit={handleSubmit}
 				/>
