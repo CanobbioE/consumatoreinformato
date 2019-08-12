@@ -4,7 +4,7 @@ import {withStyles} from '@material-ui/core/styles';
 import {AppBar, Toolbar, Typography, Button} from '@material-ui/core';
 import {Link} from 'react-router-dom';
 import Globals from '../config/Globals';
-import {logout} from '../actions';
+import {logout, setTimer} from '../actions';
 import Bell from './Bell';
 import {isAdmin, lastPayment} from '../utils/Common';
 
@@ -24,6 +24,11 @@ const styles = {
 };
 function NavBar(props) {
 	const {classes} = props;
+	const handleLogout = () => {
+		props.logout();
+		window.clearInterval(props.chat.intervalID);
+		props.setTimer(false);
+	};
 
 	const logBtn =
 		props.loginForm.token === '' ? (
@@ -34,7 +39,7 @@ function NavBar(props) {
 			<Button
 				component={Link}
 				to={Globals.routes.login}
-				onClick={props.logout}
+				onClick={handleLogout}
 				color="inherit">
 				Esci
 			</Button>
@@ -119,6 +124,7 @@ const composedComponent = connect(
 	mapStateToProps,
 	{
 		logout,
+		setTimer,
 	},
 );
 

@@ -6,6 +6,9 @@ import {
 	LOGIN_GET_SUCCESS,
 	LOGIN_GET_LOADING,
 	LOGOUT_SUCCESS,
+	CHANGE_PWD_LOADING,
+	CHANGE_PWD_FAIL,
+	CHANGE_PWD_SUCCESS,
 } from '../utils/Types';
 import {getUser} from '../utils/Common';
 import parseError from '../utils/Errors';
@@ -15,6 +18,7 @@ const INITIAL_STATE = {
 	error: '',
 	user: getUser(),
 	token: localStorage.getItem('token') || '',
+	changed: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -35,6 +39,12 @@ export default (state = INITIAL_STATE, action) => {
 				error: parseError(action.payload),
 				loading: false,
 			};
+		case CHANGE_PWD_LOADING:
+			return {...state, loading: true};
+		case CHANGE_PWD_FAIL:
+			return {...state, error: parseError(action.payload), loading: false};
+		case CHANGE_PWD_SUCCESS:
+			return {...state, error: '', loading: false, changed: true};
 		case LOGIN_GET_SUCCESS:
 			return {...state, loading: false, user: action.payload};
 		case LOGIN_GET_LOADING:

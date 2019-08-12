@@ -9,7 +9,9 @@ export default class Globals {
 		login: '/users/login',
 		refreshJWT: '/users/regenerate-token',
 		register: '/users/register',
+		forceRegister: '/users/force-register',
 		payment: '/payments/pay',
+		changePassword: '/users/change-password',
 		userData: {
 			current: '/users/current',
 			all: '/users/all',
@@ -47,5 +49,6 @@ export default class Globals {
 		collabs: '/collaboratori',
 		gdpr: '/privacy',
 		paymentSuccess: '/pagamento/successo',
+		changePassword: '/password',
 	};
 }

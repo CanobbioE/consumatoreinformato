@@ -126,7 +126,7 @@ export default function FormIscrizione(props) {
 				<TextField
 					id={'name'}
 					fullWidth
-					required
+					required={!props.skippable}
 					label={'Nome'}
 					value={name}
 					type="text"
@@ -139,7 +139,7 @@ export default function FormIscrizione(props) {
 			<Grid item xs={7}>
 				<TextField
 					fullWidth
-					required
+					required={!props.skippable}
 					id={'surname'}
 					variant="outlined"
 					label={'Cognome'}
@@ -158,7 +158,7 @@ export default function FormIscrizione(props) {
 			</Grid>
 			<Grid item xs={7}>
 				<TextField
-					required
+					required={!props.skippable}
 					fullWidth
 					id={'place'}
 					label={'Luogo di nascita'}
@@ -170,7 +170,7 @@ export default function FormIscrizione(props) {
 			</Grid>
 			<Grid item xs={7}>
 				<TextField
-					required
+					required={!props.skippable}
 					fullWidth
 					variant="outlined"
 					id={'cf'}
@@ -185,7 +185,7 @@ export default function FormIscrizione(props) {
 		<Grid item container xs={12} justify="center" spacing={8}>
 			<Grid item xs={5}>
 				<TextField
-					required
+					required={!props.skippable}
 					fullWidth
 					variant="outlined"
 					id={'home'}
@@ -198,7 +198,7 @@ export default function FormIscrizione(props) {
 			</Grid>
 			<Grid item xs={2}>
 				<TextField
-					required
+					required={!props.skippable}
 					fullWidth
 					variant="outlined"
 					id={'cap'}
@@ -211,7 +211,7 @@ export default function FormIscrizione(props) {
 			</Grid>
 			<Grid item xs={7}>
 				<TextField
-					required
+					required={!props.skippable}
 					fullWidth
 					variant="outlined"
 					id={'com'}
@@ -250,7 +250,7 @@ export default function FormIscrizione(props) {
 			</Grid>
 			<Grid item xs={7}>
 				<TextField
-					required
+					required={!props.skippable}
 					fullWidth
 					variant="outlined"
 					id={'tel'}
@@ -321,6 +321,8 @@ export default function FormIscrizione(props) {
 
 	return (
 		<FormStepper
+			disablePaper={props.disablePaper}
+			skippable={props.skippable}
 			loading={props.loading}
 			steps={steps}
 			stepsLabels={stepsLabels}
@@ -329,6 +331,7 @@ export default function FormIscrizione(props) {
 			stepValidators={stepValidators}
 			setTouched={setTouchedEnch}
 			touched={touched}
+			title={props.title}
 		/>
 	);
 }

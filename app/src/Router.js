@@ -23,6 +23,7 @@ import Admin from './containers/Admin';
 import Footer from './components/Footer';
 import Privacy from './containers/Privacy';
 import Chat from './components/Chat';
+import ChangePassword from './containers/ChangePassword';
 
 import './index.css';
 
@@ -50,26 +51,11 @@ class Router extends Component {
 							<Route exact path={Globals.routes.gdpr} component={Privacy} />
 							<Route exact path={Globals.routes.collabs} component={Collabs} />
 							<Route exact path={Globals.routes.payment} component={Payment} />
-							<Route
-								exact
-								path={Globals.routes.personal}
-								component={Personal}
-							/>
-							<Route
-								exact
-								path={Globals.routes.contatti}
-								component={Contatti}
-							/>
-							<Route
-								exact
-								path={Globals.routes.iscrizione}
-								component={Iscrizione}
-							/>
-							<Route
-								exact
-								path={Globals.routes.paymentSuccess}
-								component={PaymentSuccess}
-							/>
+							<Route exact path={Globals.routes.personal} component={Personal} />
+							<Route exact path={Globals.routes.contatti} component={Contatti} />
+							<Route exact path={Globals.routes.iscrizione} component={Iscrizione} />
+							<Route exact path={Globals.routes.paymentSuccess} component={PaymentSuccess} />
+							<Route exact path={Globals.routes.changePassword} component={ChangePassword} />
 						</div>
 						<Chat />
 						<Footer />

@@ -38,7 +38,7 @@ export default function(props) {
 				const keys = Object.keys(props.newMessages);
 				var count = 0;
 				keys.forEach(key => (count += props.newMessages[key].length));
-				const from = keys.map(k => `${k}\n`);
+				const from = keys.reduce((k1, k2) => `${k1} ${k2}`, '');
 				const message = `Hai ${count} nuov${count > 1 ? 'i' : 'o'} messagg${
 					count > 1 ? 'i' : 'io'
 				} da:

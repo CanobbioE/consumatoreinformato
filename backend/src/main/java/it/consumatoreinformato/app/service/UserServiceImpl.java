@@ -3,10 +3,12 @@ package it.consumatoreinformato.app.service;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import it.consumatoreinformato.app.config.jwt.JwtTokenProvider;
+import it.consumatoreinformato.app.dto.users.requests.ForceRegistrationDto;
 import it.consumatoreinformato.app.dto.users.requests.LoginDto;
 import it.consumatoreinformato.app.dto.users.requests.RegenerateTokenDto;
 import it.consumatoreinformato.app.dto.users.requests.RegistrationDto;
 import it.consumatoreinformato.app.dto.users.responses.LoginResponseDto;
+import it.consumatoreinformato.app.dto.users.responses.PasswordDto;
 import it.consumatoreinformato.app.dto.users.responses.RegenerateTokenResponseDto;
 import it.consumatoreinformato.app.dto.payments.responses.PaymentStatusDto;
 import it.consumatoreinformato.app.dto.users.responses.UserDto;
@@ -15,6 +17,7 @@ import it.consumatoreinformato.app.model.entities.Payment;
 import it.consumatoreinformato.app.model.entities.User;
 import it.consumatoreinformato.app.repository.PaymentRepository;
 import it.consumatoreinformato.app.repository.UserRepository;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -71,34 +74,62 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * Changes a user's password
+     * @param user who is getting the password changed
+     * @param newPassword the new password
+     * @return the encoded password
+     */
+    public PasswordDto changePassword(User user, String newPassword) {
+        User savedUser = saveUser(user, newPassword);
+        return PasswordDto.builder().hash(savedUser.getHash()).build();
+    }
+
+    /**
+     * Registers a new users with a fake payment
+     * @param forceRegistrationDto a registrationDTO but with a lastPayment date
+     * @see RegistrationDto
+     * @return the newly created user
+     * @throws EmailAlreadyRegisteredException if the email is already in use
+     */
+    public UserDto forceRegister(ForceRegistrationDto forceRegistrationDto) throws
+            EmailAlreadyRegisteredException {
+
+        LocalDate lastPayment = forceRegistrationDto.getPaymentDate();
+        if (lastPayment == null) lastPayment = LocalDate.now();
+
+        if (userRepository.existsByEmail(forceRegistrationDto.getEmail()))
+            throw new EmailAlreadyRegisteredException(forceRegistrationDto.getEmail());
+
+        User savedUser = saveUser(User.fromDto(forceRegistrationDto), forceRegistrationDto.getPassword());
+        savePayment(new BigDecimal(20 * 100), lastPayment, savedUser);
+        return UserDto.fromModel(savedUser);
+    }
+
+
+    /**
      * Registers a new users after verifying that the payment was valid
      *
-     * @param registrationDto
+     * @param registrationDto a dto containing the registration details
      * @return anything needed to the front end
-     * @throws EmailAlreadyRegisteredException
+     * @throws EmailAlreadyRegisteredException if the user is already registered
+     * @throws StripeException                 if we get an error while forwarding the payment request to stripe
+     * @throws PaymentFailedException          if the payment has failed in any way
      */
     public PaymentStatusDto register(RegistrationDto registrationDto) throws
             EmailAlreadyRegisteredException,
             StripeException,
             PaymentFailedException {
 
+        LocalDate lastPayment = LocalDate.now();
         if (userRepository.existsByEmail(registrationDto.getEmail()))
             throw new EmailAlreadyRegisteredException(registrationDto.getEmail());
-
         Charge charge = paymentService.chargeCreditCard(registrationDto.getEmail(), registrationDto.getStripeToken());
         if (!charge.getPaid()) throw new PaymentFailedException(charge.getStatus());
 
-        String hash = calculateHash(registrationDto.getPassword());
-        User newUser = User.fromDto(registrationDto);
-        newUser.setHash(hash);
-        User savedUser = userRepository.save(newUser);
 
-        Payment payment = Payment.builder()
-                .amount(new BigDecimal(20 * 100))
-                .date(LocalDate.now())
-                .payer(savedUser)
-                .build();
-        paymentRepository.save(payment);
+        User savedUser = saveUser(User.fromDto(registrationDto), registrationDto.getPassword());
+        savePayment(new BigDecimal(20 * 100), lastPayment, savedUser);
+
 
         return PaymentStatusDto.builder().paid(charge.getPaid()).build();
     }
@@ -196,11 +227,29 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Retrieves a user details
+     *
      * @param id the identifier for the user
      * @return a dto containing all the user details
      * @throws UserNotFoundException if the user cannot be found
      */
-    public UserDto get(Long id) throws  UserNotFoundException {
+    public UserDto get(Long id) throws UserNotFoundException {
         return UserDto.fromModel(userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id)));
+    }
+
+
+    private User saveUser(User user, String password) {
+        String hash = calculateHash(password);
+        user.setHash(hash);
+        return userRepository.save(user);
+    }
+
+
+    private Payment savePayment(BigDecimal amount, LocalDate date, User payer) {
+        Payment payment = Payment.builder()
+                .amount(amount)
+                .date(date)
+                .payer(payer)
+                .build();
+        return paymentRepository.save(payment);
     }
 }
