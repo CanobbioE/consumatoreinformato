@@ -10,6 +10,7 @@ export default class Globals {
 		refreshJWT: '/users/regenerate-token',
 		register: '/users/register',
 		payment: '/payments/pay',
+		changePassword: '/users/change-password',
 		userData: {
 			current: '/users/current',
 			all: '/users/all',
@@ -47,5 +48,6 @@ export default class Globals {
 		collabs: '/collaboratori',
 		gdpr: '/privacy',
 		paymentSuccess: '/pagamento/successo',
+		changePassword: '/password',
 	};
 }

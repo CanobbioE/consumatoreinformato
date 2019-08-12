@@ -69,3 +69,7 @@ export const CHAT_SET_RECEIVER = 'chat_set_receiver';
 
 export const CHAT_TOGGLE_OPEN = 'chat_toggle_open';
 export const CHAT_SET_INTERVAL_ID = 'chat_set_interval_id';
+
+export const CHANGE_PWD_LOADING = 'change_pwd_loading';
+export const CHANGE_PWD_FAIL = 'change_pwd_fail';
+export const CHANGE_PWD_SUCCESS = 'change_pwd_success';

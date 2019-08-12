@@ -31,6 +31,13 @@ const Footer = props => {
 					<Button component={Link} to={Globals.routes.gdpr} color="inherit">
 						Informativa Privacy
 					</Button>
+					|
+					<Button
+						component={Link}
+						to={Globals.routes.changePassword}
+						color="inherit">
+						Cambia Password
+					</Button>
 				</Grid>
 			</Grid>
 		</footer>

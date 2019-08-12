@@ -40,3 +40,5 @@ export const lastPayment = user => {
 export const capitalize = s => {
 	return `${s.substr(0, 1).toUpperCase()}${s.substr(1)}`;
 };
+
+export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
